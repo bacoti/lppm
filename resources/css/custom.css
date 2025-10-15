@@ -1,0 +1,48 @@
+/* HEADER GRADIENT (cerah) */
+.custom-gradient-header {
+    background: linear-gradient(90deg, #E30613 30%, #1A237E 75%);
+}
+
+/* NAVBAR GRADIENT (lebih gelap) */
+.custom-gradient-navbar {
+    background: linear-gradient(90deg, #C4050F 30%, #0D1655 75%) !important;
+    border: none;
+    box-shadow: none;
+}
+
+/* Logo */
+.logo-lppm {
+    height: 60px;
+    margin-right: 10px;
+}
+
+/* Carousel styling */
+.carousel-item img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.carousel-caption h1,
+.carousel-caption p {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Sticky navbar */
+.navbar-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    transition: background-color 0.3s ease;
+}
+
+/* Navbar link styling */
+.navbar-dark .navbar-nav .nav-link,
+.custom-gradient-navbar .navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #f0f0f0 !important;
+}

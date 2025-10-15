@@ -1,0 +1,684 @@
+@extends('admin.layouts.admin')
+
+@section('title', 'Edit Pengabdian Masyarakat')
+
+@section('content')
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Pengabdian Masyarakat</h4>
+                </div>
+
+                <form action="{{ route('admin.services.update', $service) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="card-body">
+                        <!-- Informasi Dasar -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-info-circle me-2"></i>Informasi Dasar
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-8">
+                                <label for="judul" class="form-label">Judul Pengabdian <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('judul') is-invalid @enderror"
+                                       id="judul" name="judul" value="{{ old('judul', $service->judul) }}" required>
+                                @error('judul')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="dosen_id" class="form-label">Dosen Penanggung Jawab</label>
+                                <select class="form-select @error('dosen_id') is-invalid @enderror" id="dosen_id" name="dosen_id">
+                                    <option value="">Pilih Dosen</option>
+                                    @foreach($dosens as $dosen)
+                                        <option value="{{ $dosen->id }}" {{ old('dosen_id', $service->dosen_id) == $dosen->id ? 'selected' : '' }}>
+                                            {{ $dosen->nama_lengkap }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('dosen_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="bidang" class="form-label">Bidang Pengabdian</label>
+                                <input type="text" class="form-control @error('bidang') is-invalid @enderror"
+                                       id="bidang" name="bidang" value="{{ old('bidang', $service->bidang) }}"
+                                       placeholder="Contoh: Teknologi Informasi, Pendidikan, dll">
+                                @error('bidang')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="jenis_pengabdian" class="form-label">Jenis Pengabdian</label>
+                                <select class="form-select @error('jenis_pengabdian') is-invalid @enderror"
+                                        id="jenis_pengabdian" name="jenis_pengabdian">
+                                    <option value="">Pilih Jenis Pengabdian</option>
+                                    @foreach($jenisOptions as $key => $label)
+                                        <option value="{{ $key }}" {{ old('jenis_pengabdian', $service->jenis_pengabdian) == $key ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('jenis_pengabdian')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="deskripsi" class="form-label">Deskripsi Pengabdian</label>
+                                <textarea class="form-control @error('deskripsi') is-invalid @enderror"
+                                          id="deskripsi" name="deskripsi" rows="4"
+                                          placeholder="Jelaskan secara detail tentang pengabdian masyarakat yang akan dilakukan...">{{ old('deskripsi', $service->deskripsi) }}</textarea>
+                                @error('deskripsi')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Status dan Progress -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-tasks me-2"></i>Status dan Progress
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="status" class="form-label">Status Pengabdian <span class="text-danger">*</span></label>
+                                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
+                                    <option value="">Pilih Status</option>
+                                    @foreach($statusOptions as $key => $label)
+                                        <option value="{{ $key }}" {{ old('status', $service->status) == $key ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('status')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="progress_percentage" class="form-label">Progress (%)</label>
+                                <input type="number" class="form-control @error('progress_percentage') is-invalid @enderror"
+                                       id="progress_percentage" name="progress_percentage"
+                                       value="{{ old('progress_percentage', $service->progress_percentage) }}" min="0" max="100"
+                                       placeholder="0-100">
+                                @error('progress_percentage')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Tim Pelaksana -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-users me-2"></i>Tim Pelaksana
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="ketua_pengabdian" class="form-label">Ketua Pengabdian</label>
+                                <input type="text" class="form-control @error('ketua_pengabdian') is-invalid @enderror"
+                                       id="ketua_pengabdian" name="ketua_pengabdian" value="{{ old('ketua_pengabdian', $service->ketua_pengabdian) }}"
+                                       placeholder="Nama ketua pengabdian">
+                                @error('ketua_pengabdian')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="tim_pelaksana" class="form-label">Tim Pelaksana</label>
+                                <select class="form-select @error('tim_pelaksana') is-invalid @enderror"
+                                        id="tim_pelaksana" name="tim_pelaksana[]" multiple>
+                                    @foreach($dosens as $dosen)
+                                        <option value="{{ $dosen->id }}"
+                                                {{ in_array($dosen->id, old('tim_pelaksana', $service->tim_pelaksana ?? [])) ? 'selected' : '' }}>
+                                            {{ $dosen->nama_lengkap }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <small class="form-text text-muted">Tekan Ctrl untuk memilih multiple dosen</small>
+                                @error('tim_pelaksana')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="anggota_eksternal" class="form-label">Anggota Eksternal</label>
+                                <textarea class="form-control @error('anggota_eksternal') is-invalid @enderror"
+                                          id="anggota_eksternal" name="anggota_eksternal" rows="2"
+                                          placeholder="Nama anggota dari luar kampus (jika ada), pisahkan dengan koma">{{ old('anggota_eksternal', $service->anggota_eksternal) }}</textarea>
+                                @error('anggota_eksternal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="mitra_kerjasama" class="form-label">Mitra Kerjasama</label>
+                                <input type="text" class="form-control @error('mitra_kerjasama') is-invalid @enderror"
+                                       id="mitra_kerjasama" name="mitra_kerjasama" value="{{ old('mitra_kerjasama', $service->mitra_kerjasama) }}"
+                                       placeholder="Instansi atau organisasi yang terlibat">
+                                @error('mitra_kerjasama')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Waktu Pelaksanaan -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-calendar-alt me-2"></i>Waktu Pelaksanaan
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
+                                <label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
+                                <input type="date" class="form-control @error('tanggal_mulai') is-invalid @enderror"
+                                       id="tanggal_mulai" name="tanggal_mulai" value="{{ old('tanggal_mulai', $service->tanggal_mulai?->format('Y-m-d')) }}">
+                                @error('tanggal_mulai')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
+                                <input type="date" class="form-control @error('tanggal_selesai') is-invalid @enderror"
+                                       id="tanggal_selesai" name="tanggal_selesai" value="{{ old('tanggal_selesai', $service->tanggal_selesai?->format('Y-m-d')) }}">
+                                @error('tanggal_selesai')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="tanggal_target_selesai" class="form-label">Target Selesai</label>
+                                <input type="date" class="form-control @error('tanggal_target_selesai') is-invalid @enderror"
+                                       id="tanggal_target_selesai" name="tanggal_target_selesai" value="{{ old('tanggal_target_selesai', $service->tanggal_target_selesai?->format('Y-m-d')) }}">
+                                @error('tanggal_target_selesai')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3">
+                                <label for="durasi_hari" class="form-label">Durasi (Hari)</label>
+                                <input type="number" class="form-control @error('durasi_hari') is-invalid @enderror"
+                                       id="durasi_hari" name="durasi_hari" value="{{ old('durasi_hari', $service->durasi_hari) }}" min="1">
+                                @error('durasi_hari')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Lokasi dan Sasaran -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Lokasi dan Sasaran
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="lokasi" class="form-label">Lokasi</label>
+                                <input type="text" class="form-control @error('lokasi') is-invalid @enderror"
+                                       id="lokasi" name="lokasi" value="{{ old('lokasi', $service->lokasi) }}"
+                                       placeholder="Kota/Kabupaten lokasi pengabdian">
+                                @error('lokasi')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="jumlah_peserta" class="form-label">Jumlah Peserta</label>
+                                <input type="number" class="form-control @error('jumlah_peserta') is-invalid @enderror"
+                                       id="jumlah_peserta" name="jumlah_peserta" value="{{ old('jumlah_peserta', $service->jumlah_peserta) }}" min="1">
+                                @error('jumlah_peserta')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="alamat_lengkap" class="form-label">Alamat Lengkap</label>
+                                <textarea class="form-control @error('alamat_lengkap') is-invalid @enderror"
+                                          id="alamat_lengkap" name="alamat_lengkap" rows="2"
+                                          placeholder="Alamat detail lokasi pengabdian">{{ old('alamat_lengkap', $service->alamat_lengkap) }}</textarea>
+                                @error('alamat_lengkap')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="kelompok_sasaran" class="form-label">Kelompok Sasaran</label>
+                                <input type="text" class="form-control @error('kelompok_sasaran') is-invalid @enderror"
+                                       id="kelompok_sasaran" name="kelompok_sasaran" value="{{ old('kelompok_sasaran', $service->kelompok_sasaran) }}"
+                                       placeholder="Contoh: Masyarakat, Pelajar, dll">
+                                @error('kelompok_sasaran')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="kriteria_peserta" class="form-label">Kriteria Peserta</label>
+                                <input type="text" class="form-control @error('kriteria_peserta') is-invalid @enderror"
+                                       id="kriteria_peserta" name="kriteria_peserta" value="{{ old('kriteria_peserta', $service->kriteria_peserta) }}"
+                                       placeholder="Kriteria khusus untuk peserta">
+                                @error('kriteria_peserta')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Pendanaan -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-money-bill-wave me-2"></i>Pendanaan
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label for="sumber_dana" class="form-label">Sumber Dana</label>
+                                <input type="text" class="form-control @error('sumber_dana') is-invalid @enderror"
+                                       id="sumber_dana" name="sumber_dana" value="{{ old('sumber_dana', $service->sumber_dana) }}"
+                                       placeholder="Contoh: Mandiri, Hibah, dll">
+                                @error('sumber_dana')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="jumlah_dana" class="form-label">Jumlah Dana (Rp)</label>
+                                <input type="number" class="form-control @error('jumlah_dana') is-invalid @enderror"
+                                       id="jumlah_dana" name="jumlah_dana" value="{{ old('jumlah_dana', $service->jumlah_dana) }}" min="0">
+                                @error('jumlah_dana')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label">Hibah Kompetitif</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input @error('hibah_kompetitif') is-invalid @enderror"
+                                           type="checkbox" id="hibah_kompetitif" name="hibah_kompetitif" value="1"
+                                           {{ old('hibah_kompetitif', $service->hibah_kompetitif) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="hibah_kompetitif">
+                                        Ya, ini hibah kompetitif
+                                    </label>
+                                </div>
+                                @error('hibah_kompetitif')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Output dan Dampak -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-chart-line me-2"></i>Output dan Dampak
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-12">
+                                <label for="tujuan" class="form-label">Tujuan Pengabdian</label>
+                                <textarea class="form-control @error('tujuan') is-invalid @enderror"
+                                          id="tujuan" name="tujuan" rows="3"
+                                          placeholder="Tujuan yang ingin dicapai dari pengabdian ini">{{ old('tujuan', $service->tujuan) }}</textarea>
+                                @error('tujuan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="luaran" class="form-label">Luaran yang Diharapkan</label>
+                                <textarea class="form-control @error('luaran') is-invalid @enderror"
+                                          id="luaran" name="luaran" rows="3"
+                                          placeholder="Hasil/output yang akan dihasilkan">{{ old('luaran', $service->luaran) }}</textarea>
+                                @error('luaran')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="dampak_manfaat" class="form-label">Dampak dan Manfaat</label>
+                                <textarea class="form-control @error('dampak_manfaat') is-invalid @enderror"
+                                          id="dampak_manfaat" name="dampak_manfaat" rows="3"
+                                          placeholder="Manfaat yang akan diperoleh masyarakat">{{ old('dampak_manfaat', $service->dampak_manfaat) }}</textarea>
+                                @error('dampak_manfaat')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="indikator_keberhasilan" class="form-label">Indikator Keberhasilan</label>
+                                <textarea class="form-control @error('indikator_keberhasilan') is-invalid @enderror"
+                                          id="indikator_keberhasilan" name="indikator_keberhasilan" rows="2"
+                                          placeholder="Cara mengukur keberhasilan pengabdian">{{ old('indikator_keberhasilan', $service->indikator_keberhasilan) }}</textarea>
+                                @error('indikator_keberhasilan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="kendala_hambatan" class="form-label">Kendala dan Hambatan</label>
+                                <textarea class="form-control @error('kendala_hambatan') is-invalid @enderror"
+                                          id="kendala_hambatan" name="kendala_hambatan" rows="2"
+                                          placeholder="Kendala yang mungkin dihadapi">{{ old('kendala_hambatan', $service->kendala_hambatan) }}</textarea>
+                                @error('kendala_hambatan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Dokumentasi -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-file-alt me-2"></i>Dokumentasi
+                                </h5>
+                                <small class="text-muted">Biarkan kosong jika tidak ingin mengubah file yang sudah ada</small>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="file_proposal" class="form-label">File Proposal</label>
+                                @if($service->file_proposal)
+                                    <div class="mb-2">
+                                        <small class="text-muted">File saat ini:
+                                            <a href="{{ Storage::url($service->file_proposal) }}" target="_blank" class="text-decoration-none">
+                                                <i class="fas fa-external-link-alt"></i> Lihat File
+                                            </a>
+                                        </small>
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control @error('file_proposal') is-invalid @enderror"
+                                       id="file_proposal" name="file_proposal" accept=".pdf,.doc,.docx">
+                                <small class="form-text text-muted">Format: PDF, DOC, DOCX. Maksimal 10MB</small>
+                                @error('file_proposal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="file_laporan" class="form-label">File Laporan</label>
+                                @if($service->file_laporan)
+                                    <div class="mb-2">
+                                        <small class="text-muted">File saat ini:
+                                            <a href="{{ Storage::url($service->file_laporan) }}" target="_blank" class="text-decoration-none">
+                                                <i class="fas fa-external-link-alt"></i> Lihat File
+                                            </a>
+                                        </small>
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control @error('file_laporan') is-invalid @enderror"
+                                       id="file_laporan" name="file_laporan" accept=".pdf,.doc,.docx">
+                                <small class="form-text text-muted">Format: PDF, DOC, DOCX. Maksimal 10MB</small>
+                                @error('file_laporan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="file_dokumentasi" class="form-label">File Dokumentasi</label>
+                                @if($service->file_dokumentasi)
+                                    <div class="mb-2">
+                                        <small class="text-muted">File saat ini:
+                                            <a href="{{ Storage::url($service->file_dokumentasi) }}" target="_blank" class="text-decoration-none">
+                                                <i class="fas fa-external-link-alt"></i> Lihat File
+                                            </a>
+                                        </small>
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control @error('file_dokumentasi') is-invalid @enderror"
+                                       id="file_dokumentasi" name="file_dokumentasi"
+                                       accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.zip">
+                                <small class="form-text text-muted">Format: PDF, DOC, DOCX, JPG, PNG, ZIP. Maksimal 20MB</small>
+                                @error('file_dokumentasi')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="file_sertifikat" class="form-label">File Sertifikat</label>
+                                @if($service->file_sertifikat)
+                                    <div class="mb-2">
+                                        <small class="text-muted">File saat ini:
+                                            <a href="{{ Storage::url($service->file_sertifikat) }}" target="_blank" class="text-decoration-none">
+                                                <i class="fas fa-external-link-alt"></i> Lihat File
+                                            </a>
+                                        </small>
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control @error('file_sertifikat') is-invalid @enderror"
+                                       id="file_sertifikat" name="file_sertifikat" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                <small class="form-text text-muted">Format: PDF, DOC, DOCX, JPG, PNG. Maksimal 5MB</small>
+                                @error('file_sertifikat')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="link_dokumentasi" class="form-label">Link Dokumentasi</label>
+                                <input type="url" class="form-control @error('link_dokumentasi') is-invalid @enderror"
+                                       id="link_dokumentasi" name="link_dokumentasi" value="{{ old('link_dokumentasi', $service->link_dokumentasi) }}"
+                                       placeholder="https://drive.google.com/... atau link lainnya">
+                                @error('link_dokumentasi')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- SK dan Administrasi -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-file-signature me-2"></i>SK dan Administrasi
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label for="nomor_sk" class="form-label">Nomor SK</label>
+                                <input type="text" class="form-control @error('nomor_sk') is-invalid @enderror"
+                                       id="nomor_sk" name="nomor_sk" value="{{ old('nomor_sk', $service->nomor_sk) }}"
+                                       placeholder="Nomor surat keputusan">
+                                @error('nomor_sk')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="tanggal_sk" class="form-label">Tanggal SK</label>
+                                <input type="date" class="form-control @error('tanggal_sk') is-invalid @enderror"
+                                       id="tanggal_sk" name="tanggal_sk" value="{{ old('tanggal_sk', $service->tanggal_sk?->format('Y-m-d')) }}">
+                                @error('tanggal_sk')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="file_sk" class="form-label">File SK</label>
+                                @if($service->file_sk)
+                                    <div class="mb-2">
+                                        <small class="text-muted">File saat ini:
+                                            <a href="{{ Storage::url($service->file_sk) }}" target="_blank" class="text-decoration-none">
+                                                <i class="fas fa-external-link-alt"></i> Lihat File
+                                            </a>
+                                        </small>
+                                    </div>
+                                @endif
+                                <input type="file" class="form-control @error('file_sk') is-invalid @enderror"
+                                       id="file_sk" name="file_sk" accept=".pdf,.doc,.docx">
+                                <small class="form-text text-muted">Format: PDF, DOC, DOCX. Maksimal 5MB</small>
+                                @error('file_sk')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Evaluasi -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-star me-2"></i>Evaluasi
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="tingkat_kepuasan" class="form-label">Tingkat Kepuasan</label>
+                                <select class="form-select @error('tingkat_kepuasan') is-invalid @enderror"
+                                        id="tingkat_kepuasan" name="tingkat_kepuasan">
+                                    <option value="">Pilih Tingkat Kepuasan</option>
+                                    @foreach($kepuasanOptions as $key => $label)
+                                        <option value="{{ $key }}" {{ old('tingkat_kepuasan', $service->tingkat_kepuasan) == $key ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('tingkat_kepuasan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <!-- Spacer for alignment -->
+                            </div>
+
+                            <div class="col-12">
+                                <label for="evaluasi_kegiatan" class="form-label">Evaluasi Kegiatan</label>
+                                <textarea class="form-control @error('evaluasi_kegiatan') is-invalid @enderror"
+                                          id="evaluasi_kegiatan" name="evaluasi_kegiatan" rows="3"
+                                          placeholder="Evaluasi keseluruhan kegiatan pengabdian">{{ old('evaluasi_kegiatan', $service->evaluasi_kegiatan) }}</textarea>
+                                @error('evaluasi_kegiatan')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="rekomendasi" class="form-label">Rekomendasi</label>
+                                <textarea class="form-control @error('rekomendasi') is-invalid @enderror"
+                                          id="rekomendasi" name="rekomendasi" rows="3"
+                                          placeholder="Rekomendasi untuk pengabdian selanjutnya">{{ old('rekomendasi', $service->rekomendasi) }}</textarea>
+                                @error('rekomendasi')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-light">
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-1"></i>Kembali
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fas fa-save me-1"></i>Update Pengabdian
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('styles')
+<style>
+.card-header {
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-footer {
+    border-top: 1px solid #dee2e6;
+    padding: 1.5rem;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+h5 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.border-bottom {
+    border-bottom: 2px solid #e9ecef !important;
+}
+
+.text-primary {
+    color: #0d6efd !important;
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+</style>
+@endpush
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    // Initialize select2 for multiple select
+    $('#tim_pelaksana').select2({
+        placeholder: 'Pilih tim pelaksana',
+        allowClear: true,
+        width: '100%'
+    });
+
+    // Auto calculate duration when dates change
+    $('#tanggal_mulai, #tanggal_selesai').change(function() {
+        const startDate = new Date($('#tanggal_mulai').val());
+        const endDate = new Date($('#tanggal_selesai').val());
+
+        if (startDate && endDate && endDate >= startDate) {
+            const diffTime = Math.abs(endDate - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            $('#durasi_hari').val(diffDays);
+        }
+    });
+
+    // Format number input for jumlah_dana
+    $('#jumlah_dana').on('input', function() {
+        let value = $(this).val().replace(/[^\d]/g, '');
+        $(this).val(value);
+    });
+});
+</script>
+@endpush
+@endsection
