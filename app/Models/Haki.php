@@ -13,6 +13,7 @@ class Haki extends Model
 
     protected $fillable = [
         'judul',
+        'slug',
         'jenis_haki',
         'nomor_pendaftaran',
         'nomor_publikasi',
@@ -163,5 +164,42 @@ class Haki extends Model
     public function scopeByStatus($query, $status)
     {
         return $query->where('status', $status);
+    }
+
+    /**
+     * Boot the model
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($haki) {
+            if (!$haki->slug) {
+                $haki->slug = static::generateUniqueSlug($haki->judul);
+            }
+        });
+
+        static::updating(function ($haki) {
+            if ($haki->isDirty('judul') && !$haki->slug) {
+                $haki->slug = static::generateUniqueSlug($haki->judul);
+            }
+        });
+    }
+
+    /**
+     * Generate unique slug
+     */
+    protected static function generateUniqueSlug($title)
+    {
+        $slug = \Str::slug($title);
+        $count = 1;
+        $originalSlug = $slug;
+
+        while (static::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
+        return $slug;
     }
 }

@@ -4,35 +4,18 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="hero-section bg-gradient-primary py-5 mb-5">
+<section class="hero-section bg-primary py-5 mb-5">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
                 <h1 class="text-white mb-3">HAKI</h1>
-                <h2 class="text-white h3 mb-4">Hak Kekayaan Intelektual</h2>
-                <p class="text-white-50 lead mb-4">
-                    Kumpulan karya intelektual yang telah didaftarkan dan dilindungi hak kekayaan intelektualnya,
-                    meliputi paten, merek dagang, hak cipta, dan desain industri.
+                <h2 class="text-white h4 mb-3">Hak Kekayaan Intelektual</h2>
+                <p class="text-white-50 mb-0">
+                    Kumpulan karya intelektual yang telah didaftarkan dan dilindungi hak kekayaan intelektualnya.
                 </p>
-                <div class="d-flex flex-wrap gap-2">
-                    <div class="badge badge-light badge-pill px-3 py-2 mr-2 mb-2">
-                        <i class="fas fa-lightbulb mr-1"></i>Paten
-                    </div>
-                    <div class="badge badge-light badge-pill px-3 py-2 mr-2 mb-2">
-                        <i class="fas fa-copyright mr-1"></i>Hak Cipta
-                    </div>
-                    <div class="badge badge-light badge-pill px-3 py-2 mr-2 mb-2">
-                        <i class="fas fa-trademark mr-1"></i>Merek
-                    </div>
-                    <div class="badge badge-light badge-pill px-3 py-2 mr-2 mb-2">
-                        <i class="fas fa-drafting-compass mr-1"></i>Desain Industri
-                    </div>
-                </div>
             </div>
             <div class="col-lg-4 text-center">
-                <div class="hero-icon">
-                    <i class="fas fa-shield-alt text-white" style="font-size: 8rem; opacity: 0.1;"></i>
-                </div>
+                <i class="fas fa-shield-alt text-white" style="font-size: 6rem; opacity: 0.3;"></i>
             </div>
         </div>
     </div>
@@ -303,12 +286,10 @@
 
         <!-- Pagination -->
         @if($hakiList->hasPages())
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="d-flex justify-content-center">
-                    {{ $hakiList->appends(request()->query())->links() }}
-                </div>
-            </div>
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="HAKI pagination">
+                {{ $hakiList->withQueryString()->links('pagination::bootstrap-5') }}
+            </nav>
         </div>
         @endif
     </div>
@@ -317,51 +298,8 @@
 
 @push('styles')
 <style>
-.bg-gradient-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.haki-card {
-    transition: all 0.3s ease;
-    border-radius: 12px;
-}
-
-.haki-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
-}
-
-.badge-outline-secondary {
-    color: #6c757d;
-    border: 1px solid #6c757d;
-    background: transparent;
-}
-
 .hero-section {
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.1"/><circle cx="10" cy="50" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="30" r="1" fill="white" opacity="0.1"/><circle cx="30" cy="90" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    pointer-events: none;
-}
-
-.form-label {
-    font-weight: 600;
-    color: #495057;
-    margin-bottom: 0.5rem;
-}
-
-.inventor-list .badge {
-    font-size: 0.75rem;
-    margin-bottom: 0.25rem;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
 }
 
 .table th {

@@ -109,95 +109,130 @@
     </div>
     @endif
 
-    <!-- Research Cards Grid -->
-    <div class="row g-4 mb-5">
-        @forelse($researches as $research)
-            <div class="col-lg-4 col-md-6">
-                <div class="research-card h-100">
-                    <div class="research-card-header">
-                        <span class="year-badge">
-                            <i class="far fa-calendar-alt me-1"></i>{{ $research->tahun ?? 'N/A' }}
-                        </span>
-                        @if($research->hibah_kompetitif)
-                            <span class="hibah-badge">
-                                <i class="fas fa-award me-1"></i>Hibah
-                            </span>
+    <!-- Research Table -->
+    <div class="research-table-section">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h4 class="mb-0"><i class="fas fa-microscope mr-2"></i>Daftar Penelitian</h4>
+                    <div class="d-flex gap-2">
+                        <span class="badge badge-light">{{ $researches->total() }} penelitian ditemukan</span>
+                        @if($researches->hasPages())
+                        <span class="badge badge-light">Halaman {{ $researches->currentPage() }} dari {{ $researches->lastPage() }}</span>
                         @endif
-                    </div>
-                    
-                    <div class="research-card-body">
-                        <h5 class="research-title">{{ Str::limit($research->judul, 80) }}</h5>
-                        
-                        @if($research->bidang)
-                        <div class="research-category mb-3">
-                            <i class="fas fa-tag me-1"></i>
-                            <span>{{ $research->bidang }}</span>
-                        </div>
-                        @endif
-
-                        <div class="researcher-info mb-3">
-                            <div class="researcher-avatar">
-                                {{ strtoupper(substr($research->dosen?->nama_lengkap ?? 'N', 0, 2)) }}
-                            </div>
-                            <div class="researcher-details">
-                                <div class="researcher-name">{{ $research->dosen?->nama_lengkap ?? 'N/A' }}</div>
-                                @if($research->ketua_peneliti && $research->ketua_peneliti !== $research->dosen?->nama_lengkap)
-                                    <div class="researcher-role">Ketua: {{ $research->ketua_peneliti }}</div>
-                                @endif
-                            </div>
-                        </div>
-
-                        @if($research->abstrak)
-                        <p class="research-abstract">{{ Str::limit($research->abstrak, 120) }}</p>
-                        @endif
-
-                        <div class="research-meta">
-                            @if($research->sumber_dana)
-                            <div class="meta-item">
-                                <i class="fas fa-money-bill-wave text-success"></i>
-                                <span>{{ Str::limit($research->sumber_dana, 20) }}</span>
-                            </div>
-                            @endif
-                            @if($research->tingkat)
-                            <div class="meta-item">
-                                <i class="fas fa-layer-group text-info"></i>
-                                <span>{{ ucfirst($research->tingkat) }}</span>
-                            </div>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="research-card-footer">
-                        <a href="{{ route('frontend.researches.show', $research->id) }}" 
-                           class="btn-detail">
-                            <span>Lihat Detail</span>
-                            <i class="fas fa-arrow-right ms-2"></i>
-                        </a>
                     </div>
                 </div>
             </div>
-        @empty
-            <div class="col-12">
-                <div class="empty-state">
-                    <div class="empty-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h4 class="empty-title">Tidak Ada Penelitian Ditemukan</h4>
-                    <p class="empty-text">
-                        @if(request()->has('q') || request()->has('tahun'))
-                            Coba ubah kata kunci atau filter pencarian Anda
-                        @else
-                            Belum ada data penelitian yang tersedia
-                        @endif
-                    </p>
-                    @if(request()->has('q') || request()->has('tahun'))
-                        <a href="{{ route('tridarma.penelitian') }}" class="btn btn-primary">
-                            <i class="fas fa-redo me-2"></i>Reset Pencarian
-                        </a>
-                    @endif
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th width="5%" class="text-center">#</th>
+                                <th width="30%">Judul Penelitian</th>
+                                <th width="15%">Peneliti/Ketua</th>
+                                <th width="8%" class="text-center">Tahun</th>
+                                <th width="12%">Bidang</th>
+                                <th width="10%">Tingkat</th>
+                                <th width="10%">Sumber Dana</th>
+                                <th width="10%" class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($researches as $index => $research)
+                            <tr>
+                                <td class="text-center">{{ $researches->firstItem() + $index }}</td>
+                                <td>
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <strong class="text-dark">{{ Str::limit($research->judul, 60) }}</strong>
+                                            @if($research->abstrak)
+                                            <br>
+                                            <small class="text-muted">{{ Str::limit($research->abstrak, 80) }}</small>
+                                            @endif
+                                            @if($research->hibah_kompetitif)
+                                            <br>
+                                            <span class="badge badge-warning badge-sm">
+                                                <i class="fas fa-award mr-1"></i>Hibah Kompetitif
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="researcher-avatar-sm me-2">
+                                            {{ strtoupper(substr($research->dosen?->nama_lengkap ?? $research->ketua_peneliti ?? 'N', 0, 2)) }}
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">{{ $research->dosen?->nama_lengkap ?? 'N/A' }}</div>
+                                            @if($research->ketua_peneliti && $research->ketua_peneliti !== $research->dosen?->nama_lengkap)
+                                            <small class="text-muted">Ketua: {{ $research->ketua_peneliti }}</small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-primary">{{ $research->tahun ?? 'N/A' }}</span>
+                                </td>
+                                <td>
+                                    @if($research->bidang)
+                                        <span class="badge bg-info">{{ $research->bidang }}</span>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($research->tingkat)
+                                        <span class="badge bg-secondary">{{ ucfirst($research->tingkat) }}</span>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($research->sumber_dana)
+                                        <small>{{ Str::limit($research->sumber_dana, 25) }}</small>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('frontend.researches.show', $research->id) }}"
+                                       class="btn btn-primary btn-sm"
+                                       title="Lihat Detail">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="8" class="text-center py-5">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">
+                                            <i class="fas fa-search"></i>
+                                        </div>
+                                        <h5 class="empty-title">Tidak Ada Penelitian Ditemukan</h5>
+                                        <p class="empty-text">
+                                            @if(request()->has('q') || request()->has('tahun'))
+                                                Coba ubah kata kunci atau filter pencarian Anda
+                                            @else
+                                                Belum ada data penelitian yang tersedia
+                                            @endif
+                                        </p>
+                                        @if(request()->has('q') || request()->has('tahun'))
+                                            <a href="{{ route('tridarma.penelitian') }}" class="btn btn-primary">
+                                                <i class="fas fa-redo me-2"></i>Reset Pencarian
+                                            </a>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        @endforelse
+        </div>
     </div>
 
     <!-- Pagination -->
@@ -293,84 +328,44 @@
     box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
 }
 
-/* Research Cards */
-.research-card {
-    background: white;
+/* Research Table */
+.research-table-section .card {
     border-radius: 15px;
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: 1px solid #f0f0f0;
 }
 
-.research-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+.research-table-section .card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none;
+    padding: 20px 25px;
 }
 
-.research-card-header {
-    padding: 15px 20px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.research-table-section .table {
+    margin-bottom: 0;
 }
 
-.year-badge {
-    background: white;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+.research-table-section .table thead th {
+    border: none;
     font-weight: 600;
-    color: #667eea;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
 }
 
-.hibah-badge {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    color: white;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.research-card-body {
-    padding: 25px;
-}
-
-.research-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 15px;
-    line-height: 1.5;
-    min-height: 60px;
-}
-
-.research-category {
-    display: inline-flex;
-    align-items: center;
-    background: #e6f3ff;
-    color: #0066cc;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-.researcher-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.research-table-section .table tbody td {
+    vertical-align: middle;
+    border-color: #f0f0f0;
     padding: 15px;
-    background: #f8f9fa;
-    border-radius: 10px;
 }
 
-.researcher-avatar {
-    width: 45px;
-    height: 45px;
+.research-table-section .table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.researcher-avatar-sm {
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -378,80 +373,40 @@
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     flex-shrink: 0;
 }
 
-.researcher-details {
-    flex: 1;
-    min-width: 0;
+.badge-sm {
+    font-size: 0.7rem;
+    padding: 3px 6px;
 }
 
-.researcher-name {
-    font-weight: 600;
-    color: #2d3748;
-    font-size: 0.95rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.researcher-role {
+.btn-sm {
+    padding: 5px 10px;
     font-size: 0.8rem;
-    color: #718096;
-    margin-top: 2px;
 }
 
-.research-abstract {
-    color: #4a5568;
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.research-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.meta-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.85rem;
-    color: #718096;
-}
-
-.meta-item i {
-    font-size: 1rem;
-}
-
-.research-card-footer {
-    padding: 20px 25px;
-    background: #fafbfc;
-    border-top: 1px solid #e2e8f0;
-}
-
-.btn-detail {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-detail:hover {
-    background: linear-gradient(135deg, #5568d3 0%, #653a8a 100%);
-    color: white;
-    transform: translateX(5px);
+/* Responsive Table */
+@media (max-width: 768px) {
+    .research-table-section .table-responsive {
+        font-size: 0.85rem;
+    }
+    
+    .research-table-section .table thead th {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+    
+    .research-table-section .table tbody td {
+        padding: 10px 8px;
+    }
+    
+    .researcher-avatar-sm {
+        width: 30px;
+        height: 30px;
+        font-size: 0.7rem;
+    }
 }
 
 /* Empty State */
@@ -515,7 +470,7 @@
     }
 }
 
-.research-card {
+.research-table-section .table {
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -555,13 +510,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('filterForm').submit();
         });
     }
-    
-    // Smooth scroll animation
-    document.querySelectorAll('.btn-detail').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
 });
 </script>
 @endpush

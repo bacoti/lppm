@@ -125,109 +125,137 @@
     </div>
     @endif
 
-    <!-- Service Cards Grid -->
-    <div class="row g-5 mb-5">
-        @forelse($services as $service)
-            <div class="col-lg-6 col-md-6">
-                <div class="service-card h-100">
-                    <!-- Card Header with Year -->
-                    <div class="service-card-header">
-                        @if($service->tanggal_mulai)
-                            <span class="year-badge">
-                                <i class="far fa-calendar-alt me-2"></i>{{ $service->tanggal_mulai->format('Y') }}
-                            </span>
+    <!-- Service Table -->
+    <div class="service-table-section">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-success text-white">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h4 class="mb-0"><i class="fas fa-hands-helping mr-2"></i>Daftar Pengabdian Masyarakat</h4>
+                    <div class="d-flex gap-2">
+                        <span class="badge badge-light">{{ $services->total() }} pengabdian ditemukan</span>
+                        @if($services->hasPages())
+                        <span class="badge badge-light">Halaman {{ $services->currentPage() }} dari {{ $services->lastPage() }}</span>
                         @endif
-                        @if($service->hibah_kompetitif)
-                            <span class="hibah-badge">
-                                <i class="fas fa-award me-2"></i>Hibah
-                            </span>
-                        @endif
-                    </div>
-                    
-                    <div class="service-card-body">
-                        <!-- Category Badge -->
-                        @if($service->jenis_pengabdian)
-                        <div class="category-badge mb-3">
-                            {{ $jenisOptions[$service->jenis_pengabdian] ?? 'Pengabdian' }}
-                        </div>
-                        @endif
-
-                        <!-- Title -->
-                        <h5 class="service-title">{{ Str::limit($service->judul, 100) }}</h5>
-                        
-                        <!-- Location -->
-                        @if($service->lokasi)
-                        <div class="location-info mb-3">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>{{ Str::limit($service->lokasi, 60) }}</span>
-                        </div>
-                        @endif
-
-                        <!-- Coordinator -->
-                        <div class="coordinator-section mb-3">
-                            <div class="coordinator-label">Penanggung Jawab</div>
-                            <div class="coordinator-name">{{ $service->dosen?->nama_lengkap ?? 'N/A' }}</div>
-                        </div>
-
-                        <!-- Timeline -->
-                        @if($service->tanggal_mulai && $service->tanggal_selesai)
-                        <div class="timeline-info">
-                            <div class="timeline-item">
-                                <span class="timeline-label">Mulai:</span>
-                                <span class="timeline-date">{{ $service->tanggal_mulai->format('d M Y') }}</span>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="timeline-label">Selesai:</span>
-                                <span class="timeline-date">{{ $service->tanggal_selesai->format('d M Y') }}</span>
-                            </div>
-                        </div>
-                        @endif
-
-                        <!-- Status & Progress -->
-                        <div class="status-section mt-3">
-                            @if($service->status)
-                            <span class="status-badge status-{{ $service->status }}">
-                                {{ \App\Models\Service::getStatusOptions()[$service->status] ?? ucfirst($service->status) }}
-                            </span>
-                            @endif
-                            @if($service->progress_percentage !== null)
-                            <span class="progress-badge">
-                                {{ $service->progress_percentage }}%
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <!-- Card Footer -->
-                    <div class="service-card-footer">
-                        <a href="{{ route('frontend.services.show', $service->id) }}" class="btn-detail">
-                            Lihat Detail <i class="fas fa-arrow-right ms-2"></i>
-                        </a>
                     </div>
                 </div>
             </div>
-        @empty
-            <div class="col-12">
-                <div class="empty-state">
-                    <div class="empty-icon">
-                        <i class="fas fa-hands-helping"></i>
-                    </div>
-                    <h4 class="empty-title">Tidak Ada Pengabdian Ditemukan</h4>
-                    <p class="empty-text">
-                        @if(request()->has('q') || request()->has('jenis') || request()->has('tahun'))
-                            Coba ubah kata kunci atau filter pencarian Anda
-                        @else
-                            Belum ada data pengabdian yang tersedia
-                        @endif
-                    </p>
-                    @if(request()->has('q') || request()->has('jenis') || request()->has('tahun'))
-                        <a href="{{ route('tridarma.pengabdian') }}" class="btn btn-success">
-                            <i class="fas fa-redo me-2"></i>Reset Pencarian
-                        </a>
-                    @endif
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th width="5%" class="text-center">#</th>
+                                <th width="25%">Judul Pengabdian</th>
+                                <th width="15%">Penanggung Jawab</th>
+                                <th width="12%">Jenis</th>
+                                <th width="15%">Lokasi</th>
+                                <th width="8%" class="text-center">Tahun</th>
+                                <th width="10%">Status</th>
+                                <th width="10%" class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($services as $index => $service)
+                            <tr>
+                                <td class="text-center">{{ $services->firstItem() + $index }}</td>
+                                <td>
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <strong class="text-dark">{{ Str::limit($service->judul, 50) }}</strong>
+                                            @if($service->tanggal_mulai && $service->tanggal_selesai)
+                                            <br>
+                                            <small class="text-muted">
+                                                {{ $service->tanggal_mulai->format('d/m/Y') }} - {{ $service->tanggal_selesai->format('d/m/Y') }}
+                                            </small>
+                                            @endif
+                                            @if($service->hibah_kompetitif)
+                                            <br>
+                                            <span class="badge badge-warning badge-sm">
+                                                <i class="fas fa-award mr-1"></i>Hibah Kompetitif
+                                            </span>
+                                            @endif
+                                            @if($service->progress_percentage !== null)
+                                            <br>
+                                            <span class="badge badge-info badge-sm">
+                                                Progress: {{ $service->progress_percentage }}%
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="coordinator-avatar-sm me-2">
+                                            {{ strtoupper(substr($service->dosen?->nama_lengkap ?? 'N', 0, 2)) }}
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold">{{ $service->dosen?->nama_lengkap ?? 'N/A' }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    @if($service->jenis_pengabdian)
+                                        <span class="badge bg-success">{{ $jenisOptions[$service->jenis_pengabdian] ?? 'Pengabdian' }}</span>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($service->lokasi)
+                                        <small>{{ Str::limit($service->lokasi, 30) }}</small>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-primary">{{ $service->tanggal_mulai?->format('Y') ?? 'N/A' }}</span>
+                                </td>
+                                <td>
+                                    @if($service->status)
+                                        <span class="badge status-{{ $service->status }}">
+                                            {{ \App\Models\Service::getStatusOptions()[$service->status] ?? ucfirst($service->status) }}
+                                        </span>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('frontend.services.show', $service->id) }}"
+                                       class="btn btn-success btn-sm"
+                                       title="Lihat Detail">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="8" class="text-center py-5">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">
+                                            <i class="fas fa-hands-helping"></i>
+                                        </div>
+                                        <h5 class="empty-title">Tidak Ada Pengabdian Ditemukan</h5>
+                                        <p class="empty-text">
+                                            @if(request()->has('q') || request()->has('jenis') || request()->has('tahun'))
+                                                Coba ubah kata kunci atau filter pencarian Anda
+                                            @else
+                                                Belum ada data pengabdian yang tersedia
+                                            @endif
+                                        </p>
+                                        @if(request()->has('q') || request()->has('jenis') || request()->has('tahun'))
+                                            <a href="{{ route('tridarma.pengabdian') }}" class="btn btn-success">
+                                                <i class="fas fa-redo me-2"></i>Reset Pencarian
+                                            </a>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        @endforelse
+        </div>
     </div>
 
     <!-- Pagination -->
@@ -323,271 +351,116 @@
     box-shadow: 0 0 0 0.2rem rgba(17, 153, 142, 0.25);
 }
 
-/* Service Cards - Enhanced Clear Separation */
-.service-card {
-    background: white;
-    border-radius: 16px;
+/* Service Table */
+.service-table-section .card {
+    border-radius: 15px;
     overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-    border: 3px solid #e8f5e9;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2rem;
-    position: relative;
 }
 
-.service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
-    z-index: 1;
+.service-table-section .card-header {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+    border: none;
+    padding: 20px 25px;
 }
 
-.service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 32px rgba(17, 153, 142, 0.25);
-    border-color: #11998e;
-}
-
-.service-card-header {
-    padding: 15px 20px;
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 60px;
-    border-bottom: 3px solid rgba(255,255,255,0.3);
-}
-
-.year-badge {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #11998e;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.hibah-badge {
-    background: #ff6b6b;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.service-card-body {
-    padding: 25px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: #fafafa;
-    border-left: 4px solid #11998e;
-    margin: 3px;
-    border-radius: 12px;
-}
-
-/* Category Badge */
-.category-badge {
-    display: inline-block;
-    background: #e8f5e9;
-    color: #2e7d32;
-    padding: 6px 14px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    width: fit-content;
-}
-
-/* Title */
-.service-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #1a202c;
-    margin-bottom: 15px;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 66px;
-}
-
-/* Location */
-.location-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #718096;
-    font-size: 0.9rem;
-    padding: 12px 0;
-    border-bottom: 2px solid #e2e8f0;
-    background: white;
-    border-radius: 8px;
-    margin-bottom: 8px;
-    padding-left: 12px;
-}
-
-.location-info i {
-    color: #11998e;
-    font-size: 1rem;
-}
-
-/* Coordinator Section */
-.coordinator-section {
-    padding: 15px 12px;
-    border-bottom: 2px solid #e2e8f0;
-    background: white;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
-
-.coordinator-label {
-    font-size: 0.75rem;
-    color: #718096;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.coordinator-name {
-    font-size: 0.95rem;
-    color: #1a202c;
-    font-weight: 600;
-}
-
-/* Timeline Info */
-.timeline-info {
-    padding: 15px 12px;
-    border-bottom: 2px solid #e2e8f0;
-    background: white;
-    border-radius: 8px;
-    margin-bottom: 8px;
-}
-
-.timeline-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-}
-
-.timeline-item:last-child {
+.service-table-section .table {
     margin-bottom: 0;
 }
 
-.timeline-label {
-    font-size: 0.85rem;
-    color: #718096;
-    font-weight: 500;
-}
-
-.timeline-date {
-    font-size: 0.85rem;
-    color: #1a202c;
+.service-table-section .table thead th {
+    border: none;
     font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
 }
 
-/* Status Section */
-.status-section {
+.service-table-section .table tbody td {
+    vertical-align: middle;
+    border-color: #f0f0f0;
+    padding: 15px;
+}
+
+.service-table-section .table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.coordinator-avatar-sm {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
     display: flex;
-    gap: 10px;
     align-items: center;
-    flex-wrap: wrap;
-    padding-top: 12px;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.75rem;
+    flex-shrink: 0;
 }
 
-.status-badge {
-    padding: 6px 12px;
-    border-radius: 6px;
+.badge-sm {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+}
+
+.btn-sm {
+    padding: 5px 10px;
     font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: capitalize;
 }
 
-.status-badge.status-draft {
+/* Status badges for table */
+.status-draft {
     background: #f3f4f6;
     color: #6b7280;
 }
 
-.status-badge.status-proposal {
+.status-proposal {
     background: #dbeafe;
     color: #1e40af;
 }
 
-.status-badge.status-approved {
+.status-approved {
     background: #e0e7ff;
     color: #4338ca;
 }
 
-.status-badge.status-ongoing {
+.status-ongoing {
     background: #fef3c7;
     color: #92400e;
 }
 
-.status-badge.status-completed {
+.status-completed {
     background: #d1fae5;
     color: #065f46;
 }
 
-.status-badge.status-reported {
+.status-reported {
     background: #cffafe;
     color: #155e75;
 }
 
-.progress-badge {
-    background: #e0f2fe;
-    color: #0369a1;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
+/* Responsive Table */
+@media (max-width: 768px) {
+    .service-table-section .table-responsive {
+        font-size: 0.85rem;
+    }
 
-/* Card Footer */
-.service-card-footer {
-    padding: 20px;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    border-top: 3px solid #11998e;
-    margin: 3px;
-    border-radius: 12px;
-}
+    .service-table-section .table thead th {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
 
-.btn-detail {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 12px;
-    background: #11998e;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-}
+    .service-table-section .table tbody td {
+        padding: 10px 8px;
+    }
 
-.btn-detail:hover {
-    background: #0d7a6f;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(17, 153, 142, 0.3);
+    .coordinator-avatar-sm {
+        width: 30px;
+        height: 30px;
+        font-size: 0.7rem;
+    }
 }
 
 /* Empty State */
@@ -670,17 +543,9 @@
     }
 }
 
-.service-card {
+.service-table-section .table {
     animation: fadeInUp 0.6s ease-out;
-    animation-fill-mode: both;
 }
-
-.service-card:nth-child(1) { animation-delay: 0.1s; }
-.service-card:nth-child(2) { animation-delay: 0.2s; }
-.service-card:nth-child(3) { animation-delay: 0.3s; }
-.service-card:nth-child(4) { animation-delay: 0.4s; }
-.service-card:nth-child(5) { animation-delay: 0.5s; }
-.service-card:nth-child(6) { animation-delay: 0.6s; }
 
 /* Pagination Styling */
 .pagination {
@@ -720,25 +585,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-submit on filter change
     const jenisSelect = document.getElementById('jenis');
     const tahunSelect = document.getElementById('tahun');
-    
+
     if (jenisSelect) {
         jenisSelect.addEventListener('change', function() {
             document.getElementById('filterForm').submit();
         });
     }
-    
+
     if (tahunSelect) {
         tahunSelect.addEventListener('change', function() {
             document.getElementById('filterForm').submit();
         });
     }
-    
-    // Smooth scroll animation
-    document.querySelectorAll('.btn-detail').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
 });
 </script>
 @endpush
