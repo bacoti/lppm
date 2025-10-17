@@ -20,10 +20,10 @@
 
 <body>
     {{-- Topbar --}}
-    <nav class="navbar navbar-dark bg-dark px-3">
+    {{-- <nav class="navbar navbar-dark bg-dark px-3">
         <span class="navbar-text text-white">Web LPKIA</span>
         <span class="ms-auto text-white">PENAMAS</span>
-    </nav>
+    </nav> --}}
 
     {{-- Header --}}
     <div class="d-flex justify-content-between align-items-center px-4 py-2 custom-gradient-header">

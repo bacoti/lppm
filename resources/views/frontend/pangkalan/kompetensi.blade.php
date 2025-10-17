@@ -107,126 +107,153 @@
     </div>
     @endif
 
-    <!-- Competence Cards Grid -->
-    <div class="row g-4 mb-5">
-        @forelse($competences as $competence)
-            <div class="col-lg-4 col-md-6">
-                <div class="competence-card h-100">
-                    <!-- Card Header -->
-                    <div class="competence-card-header">
-                        <div class="dosen-avatar">
-                            {{ strtoupper(substr($competence->dosen?->nama_lengkap ?? 'N', 0, 2)) }}
-                        </div>
-                        @if($competence->status_sertifikasi)
-                            <span class="certification-badge status-{{ $competence->status_sertifikasi }}">
-                                @if($competence->status_sertifikasi == 'aktif')
-                                    <i class="fas fa-check-circle me-1"></i>Tersertifikasi
-                                @elseif($competence->status_sertifikasi == 'tidak_aktif')
-                                    <i class="fas fa-times-circle me-1"></i>Tidak Aktif
-                                @else
-                                    <i class="fas fa-clock me-1"></i>Proses
-                                @endif
-                            </span>
-                        @endif
-                    </div>
-                    
-                    <div class="competence-card-body">
-                        <!-- Dosen Name -->
-                        <h5 class="dosen-name">{{ $competence->dosen?->nama_lengkap ?? 'N/A' }}</h5>
-                        
-                        <!-- NIDN -->
-                        @if($competence->dosen?->nidn_nip)
-                        <div class="nidn-info mb-3">
-                            <i class="fas fa-id-card"></i>
-                            <span>NIDN: {{ $competence->dosen->nidn_nip }}</span>
-                        </div>
-                        @endif
-
-                        <!-- Education Info -->
-                        <div class="education-section mb-3">
-                            <div class="info-row">
-                                <div class="info-label">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    <span>Jenjang</span>
-                                </div>
-                                <div class="info-value">{{ $competence->jenjang_pendidikan ?? '-' }}</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">
-                                    <i class="fas fa-university"></i>
-                                    <span>Perguruan Tinggi</span>
-                                </div>
-                                <div class="info-value">{{ Str::limit($competence->nama_perguruan_tinggi ?? '-', 30) }}</div>
-                            </div>
-                            <div class="info-row">
-                                <div class="info-label">
-                                    <i class="fas fa-calendar"></i>
-                                    <span>Tahun Lulus</span>
-                                </div>
-                                <div class="info-value">{{ $competence->tahun_lulus ?? '-' }}</div>
-                            </div>
-                        </div>
-
-                        <!-- Expertise Area -->
-                        @if($competence->bidang_keilmuan)
-                        <div class="expertise-section mb-3">
-                            <div class="expertise-label">Bidang Keilmuan</div>
-                            <div class="expertise-tag">
-                                <i class="fas fa-brain"></i>
-                                {{ Str::limit($competence->bidang_keilmuan, 50) }}
-                            </div>
-                        </div>
-                        @endif
-
-                        <!-- Teaching Methodology -->
-                        @if($competence->metodologi_pengajaran)
-                        <div class="methodology-section">
-                            <div class="methodology-label">Metodologi Pengajaran</div>
-                            <p class="methodology-text">{{ Str::limit($competence->metodologi_pengajaran, 100) }}</p>
-                        </div>
-                        @endif
-                    </div>
-
-                    <!-- Card Footer -->
-                    <div class="competence-card-footer">
-                        @if($competence->sertifikat_pendidik)
-                        <div class="certificate-info">
-                            <i class="fas fa-award text-warning"></i>
-                            <span>{{ $competence->sertifikat_pendidik }}</span>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        @empty
-            <div class="col-12">
-                <div class="empty-state">
-                    <div class="empty-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4 class="empty-title">Tidak Ada Kompetensi Ditemukan</h4>
-                    <p class="empty-text">
-                        @if(request()->has('q') || request()->has('status'))
-                            Coba ubah kata kunci atau filter pencarian Anda
-                        @else
-                            Belum ada data kompetensi yang tersedia
-                        @endif
-                    </p>
-                    @if(request()->has('q') || request()->has('status'))
-                        <a href="{{ route('pangkalan.kompetensi') }}" class="btn btn-primary">
-                            <i class="fas fa-redo me-2"></i>Reset Pencarian
-                        </a>
+    <!-- Competence Table Section -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <h4 class="mb-0"><i class="fas fa-graduation-cap mr-2"></i>Daftar Kompetensi Dosen</h4>
+                <div class="d-flex gap-2 flex-wrap">
+                    <span class="badge badge-light">{{ $competences->total() }} kompetensi tersedia</span>
+                    @if($competences->hasPages())
+                    <span class="badge badge-light">Halaman {{ $competences->currentPage() }} dari {{ $competences->lastPage() }}</span>
+                    @endif
+                    @if($query)
+                    <span class="badge badge-info">{{ $query }}</span>
+                    @endif
+                    @if($status ?? '')
+                    <span class="badge badge-warning">{{ ucfirst(str_replace('_', ' ', $status)) }}</span>
                     @endif
                 </div>
             </div>
-        @endforelse
+        </div>
+        <div class="card-body p-0">
+            @if($competences->count() > 0)
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th width="5%" class="text-center">#</th>
+                            <th width="20%">Nama Dosen</th>
+                            <th width="15%">NIDN</th>
+                            <th width="15%">Jenjang Pendidikan</th>
+                            <th width="20%">Bidang Keilmuan</th>
+                            <th width="10%">Status Sertifikasi</th>
+                            <th width="15%">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($competences as $index => $competence)
+                        <tr>
+                            <td class="text-center">{{ $competences->firstItem() + $index }}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="dosen-avatar-table me-3">
+                                        {{ strtoupper(substr($competence->dosen?->nama_lengkap ?? 'N', 0, 2)) }}
+                                    </div>
+                                    <div>
+                                        <strong>{{ $competence->dosen?->nama_lengkap ?? 'N/A' }}</strong>
+                                        @if($competence->tahun_lulus)
+                                        <br>
+                                        <small class="text-muted">Lulus {{ $competence->tahun_lulus }}</small>
+                                        @endif
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @if($competence->dosen?->nidn_nip)
+                                    <span class="badge bg-light text-dark">{{ $competence->dosen->nidn_nip }}</span>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($competence->jenjang_pendidikan)
+                                    <span class="badge badge-primary">{{ $competence->jenjang_pendidikan }}</span>
+                                    @if($competence->nama_perguruan_tinggi)
+                                    <br>
+                                    <small class="text-muted">{{ Str::limit($competence->nama_perguruan_tinggi, 25) }}</small>
+                                    @endif
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($competence->bidang_keilmuan)
+                                    <span class="badge badge-outline-secondary">{{ Str::limit($competence->bidang_keilmuan, 30) }}</span>
+                                    @if($competence->metodologi_pengajaran)
+                                    <br>
+                                    <small class="text-muted">{{ Str::limit($competence->metodologi_pengajaran, 35) }}</small>
+                                    @endif
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($competence->status_sertifikasi)
+                                    <span class="badge {{ $competence->status_sertifikasi == 'aktif' ? 'bg-success' : ($competence->status_sertifikasi == 'tidak_aktif' ? 'bg-danger' : 'bg-warning') }}">
+                                        @if($competence->status_sertifikasi == 'aktif')
+                                            <i class="fas fa-check-circle me-1"></i>Aktif
+                                        @elseif($competence->status_sertifikasi == 'tidak_aktif')
+                                            <i class="fas fa-times-circle me-1"></i>Tidak Aktif
+                                        @else
+                                            <i class="fas fa-clock me-1"></i>Proses
+                                        @endif
+                                    </span>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($competence->sertifikat_pendidik)
+                                    <button class="btn btn-info btn-sm" title="Sertifikat: {{ $competence->sertifikat_pendidik }}">
+                                        <i class="fas fa-award"></i> Sertifikat
+                                    </button>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @else
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <i class="fas fa-graduation-cap fa-4x text-muted"></i>
+                </div>
+                <h4 class="text-muted mb-3">Tidak ada kompetensi ditemukan</h4>
+                <p class="text-muted mb-4">
+                    @if(request()->has('q') || request()->has('status'))
+                        Coba ubah kriteria pencarian atau filter Anda untuk menemukan kompetensi yang diinginkan.
+                    @else
+                        Belum ada data kompetensi yang dipublikasikan saat ini.
+                    @endif
+                </p>
+                @if(request()->has('q') || request()->has('status'))
+                <div class="d-flex justify-content-center gap-2">
+                    <a href="{{ route('pangkalan.kompetensi') }}" class="btn btn-primary">
+                        <i class="fas fa-refresh mr-1"></i>Reset Filter
+                    </a>
+                    <a href="{{ route('home') }}" class="btn btn-secondary">
+                        <i class="fas fa-home mr-1"></i>Kembali ke Beranda
+                    </a>
+                </div>
+                @else
+                <a href="{{ route('home') }}" class="btn btn-primary">
+                    <i class="fas fa-home mr-1"></i>Kembali ke Beranda
+                </a>
+                @endif
+            </div>
+            @endif
+        </div>
     </div>
 
     <!-- Pagination -->
     @if($competences->hasPages())
-    <div class="d-flex justify-content-center">
-        <nav aria-label="Competence pagination">
-            {{ $competences->appends(['q' => $query ?? '', 'status' => $status ?? ''])->links('pagination::bootstrap-5') }}
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Kompetensi pagination">
+            {{ $competences->withQueryString()->links('pagination::bootstrap-5') }}
         </nav>
     </div>
     @endif
@@ -315,7 +342,41 @@
     box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
 }
 
-/* Competence Cards */
+/* Table Styles */
+.dosen-avatar-table {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.badge-outline-secondary {
+    color: #6c757d;
+    border: 1px solid #6c757d;
+    background: transparent;
+}
+
+.table th {
+    vertical-align: middle;
+    font-weight: 600;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table-responsive {
+    border-radius: 0;
+}
+
+/* Competence Cards - Keep for potential future use */
 .competence-card {
     background: white;
     border-radius: 15px;
@@ -537,15 +598,15 @@
     .hero-title {
         font-size: 2rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1rem;
     }
-    
+
     .stat-number {
         font-size: 2rem;
     }
-    
+
     .competence-hero-section {
         padding: 50px 0 40px;
     }
@@ -563,6 +624,20 @@
 
     .info-value {
         text-align: left;
+    }
+
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+
+    .table th, .table td {
+        padding: 0.5rem;
+    }
+
+    .dosen-avatar-table {
+        width: 35px;
+        height: 35px;
+        font-size: 0.875rem;
     }
 }
 
