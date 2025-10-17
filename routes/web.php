@@ -63,11 +63,11 @@ Route::prefix('tridarma')->group(function () {
 Route::get('/haki', [HakiController::class, 'index'])->name('frontend.haki');
 Route::get('/haki/{haki}', [HakiController::class, 'show'])->name('frontend.haki.show');
 
-// Jurnal Routes
-Route::get('/jurnal', [App\Http\Controllers\JurnalController::class, 'index'])->name('jurnal.index');
-Route::get('/jurnal/{jurnal}', [App\Http\Controllers\JurnalController::class, 'show'])->name('jurnal.show');
-Route::get('/jurnal/{jurnal}/download', [App\Http\Controllers\JurnalController::class, 'download'])->name('jurnal.download');
-Route::post('/jurnal/{jurnal}/track-view', [App\Http\Controllers\JurnalController::class, 'trackView'])->name('jurnal.track-view');
+// Jurnal Routes - Disabled
+// Route::get('/jurnal', [App\Http\Controllers\JurnalController::class, 'index'])->name('jurnal.index');
+// Route::get('/jurnal/{jurnal}', [App\Http\Controllers\JurnalController::class, 'show'])->name('jurnal.show');
+// Route::get('/jurnal/{jurnal}/download', [App\Http\Controllers\JurnalController::class, 'download'])->name('jurnal.download');
+// Route::post('/jurnal/{jurnal}/track-view', [App\Http\Controllers\JurnalController::class, 'trackView'])->name('jurnal.track-view');
 
 // Dokumen Routes
 Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
@@ -113,7 +113,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('researches', ResearchController::class);
         Route::resource('services', ServiceController::class);
         Route::resource('haki', AdminHakiController::class);
-        Route::resource('jurnal', App\Http\Controllers\Admin\JurnalController::class);
+        // Route::resource('jurnal', App\Http\Controllers\Admin\JurnalController::class); // Disabled - Fitur jurnal dinonaktifkan
         Route::resource('dokumen', AdminDokumenController::class);
         Route::get('services-export', [ServiceController::class, 'export'])->name('services.export');
         Route::get('pengabdian', [AdminDashboardController::class, 'pengabdian'])->name('pengabdian');

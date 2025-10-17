@@ -84,7 +84,6 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('tridarma.penelitian') }}">Penelitian</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('tridarma.pengabdian') }}">Pengabdian</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('frontend.haki') }}">HAKI</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('jurnal.index') }}">Jurnal Lain</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('dokumen.index') }}">Dokumen</a></li>
 
                     <li class="nav-item dropdown navbar-hover-dropdown">
@@ -155,7 +154,6 @@
                             <li><a href="{{ route('tentang') }}" class="footer-link">Tentang Kami</a></li>
                             <li><a href="{{ route('tridarma.penelitian') }}" class="footer-link">Penelitian</a></li>
                             <li><a href="{{ route('tridarma.pengabdian') }}" class="footer-link">Pengabdian</a></li>
-                            <li><a href="{{ route('jurnal.index') }}" class="footer-link">Jurnal Lain</a></li>
                             <li><a href="{{ route('dokumen.index') }}" class="footer-link">Dokumen</a></li>
                             <li><a href="{{ route('faq') }}" class="footer-link">FAQ</a></li>
                         </ul>

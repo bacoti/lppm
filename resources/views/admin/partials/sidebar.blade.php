@@ -73,28 +73,11 @@
                 </li>
 
                 {{-- Pengabdian --}}
-                <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                <li class="nav-item">
+                    <a href="{{ route('admin.services.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-hands-helping"></i>
-                        <p>
-                            Pengabdian
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
+                        <p>Pengabdian</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.services.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Data Pengabdian</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.services.create') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tambah Pengabdian</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 {{-- HAKI --}}
@@ -102,14 +85,6 @@
                     <a href="{{ route('admin.haki.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-copyright"></i>
                         <p>HAKI</p>
-                    </a>
-                </li>
-
-                {{-- Jurnal --}}
-                <li class="nav-item">
-                    <a href="{{ route('admin.jurnal.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-book-open"></i>
-                        <p>Jurnal</p>
                     </a>
                 </li>
 
