@@ -21,11 +21,11 @@ class AdminDashboardController extends Controller
 
         // Status statistics (adjusted for available fields)
         $statusStats = [
-            'active' => Research::whereIn('status', ['ongoing', 'submitted'])->count() + 
+            'active' => Research::whereIn('status', ['ongoing', 'submitted'])->count() +
                        Haki::whereIn('status', ['granted', 'dipublikasi'])->count(),
-            'draft' => Research::where('status', 'draft')->count() + 
+            'draft' => Research::where('status', 'draft')->count() +
                       Haki::where('status', 'draft')->count(),
-            'pending' => Haki::whereIn('status', ['diajukan', 'dalam_proses'])->count() + 
+            'pending' => Haki::whereIn('status', ['diajukan', 'dalam_proses'])->count() +
                         Research::where('status', 'submitted')->count(),
         ];
 

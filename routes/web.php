@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\AuthController as AdminAuth;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\DosenController;
 use App\Http\Controllers\Admin\HakiController as AdminHakiController;
+use App\Http\Controllers\Admin\DokumenController as AdminDokumenController;
 use App\Http\Controllers\Auth\DosenAuthController;
+use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\HakiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QualificationController;
@@ -27,7 +29,7 @@ Route::get('/', function () {
 
     // Ambil gambar terkait konten (relasi dengan content_id)
     $images = ImageContent::where('content_id', $content->id ?? 0)->get();
-    
+
     // Ambil data HAKI terbaru untuk ditampilkan di homepage
     $hakis = \App\Models\Haki::latest()
         ->where('status', '!=', 'draft')
@@ -66,6 +68,11 @@ Route::get('/jurnal', [App\Http\Controllers\JurnalController::class, 'index'])->
 Route::get('/jurnal/{jurnal}', [App\Http\Controllers\JurnalController::class, 'show'])->name('jurnal.show');
 Route::get('/jurnal/{jurnal}/download', [App\Http\Controllers\JurnalController::class, 'download'])->name('jurnal.download');
 Route::post('/jurnal/{jurnal}/track-view', [App\Http\Controllers\JurnalController::class, 'trackView'])->name('jurnal.track-view');
+
+// Dokumen Routes
+Route::get('/dokumen', [DokumenController::class, 'index'])->name('dokumen.index');
+Route::get('/dokumen/{slug}', [DokumenController::class, 'show'])->name('dokumen.show');
+Route::get('/dokumen/{slug}/download', [DokumenController::class, 'download'])->name('dokumen.download');
 
 Route::prefix('pangkalan')->group(function () {
     Route::get('/profil', [ProfileController::class, 'index'])->name('pangkalan.profil');
@@ -107,6 +114,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('services', ServiceController::class);
         Route::resource('haki', AdminHakiController::class);
         Route::resource('jurnal', App\Http\Controllers\Admin\JurnalController::class);
+        Route::resource('dokumen', AdminDokumenController::class);
         Route::get('services-export', [ServiceController::class, 'export'])->name('services.export');
         Route::get('pengabdian', [AdminDashboardController::class, 'pengabdian'])->name('pengabdian');
     });

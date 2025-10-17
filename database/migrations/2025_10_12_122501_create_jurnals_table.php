@@ -41,7 +41,7 @@ return new class extends Migration
             $table->enum('akreditasi', ['sinta_1', 'sinta_2', 'sinta_3', 'sinta_4', 'sinta_5', 'sinta_6', 'scopus', 'wos', 'non_sinta'])->nullable();
             $table->text('catatan_admin')->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['status', 'tanggal_publikasi']);
             $table->index(['jenis_jurnal', 'tahun']);

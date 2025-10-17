@@ -28,7 +28,7 @@
     <form action="{{ route('admin.jurnal.update', $jurnal) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        
+
         <!-- Basic Information Card -->
         <div class="card">
             <div class="card-header">
@@ -41,7 +41,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="judul" class="required">Judul Artikel</label>
-                            <textarea name="judul" id="judul" class="form-control @error('judul') is-invalid @enderror" 
+                            <textarea name="judul" id="judul" class="form-control @error('judul') is-invalid @enderror"
                                       rows="3" placeholder="Masukkan judul artikel jurnal">{{ old('judul', $jurnal->judul) }}</textarea>
                             @error('judul')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -49,12 +49,12 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="nama_jurnal" class="required">Nama Jurnal</label>
-                            <input type="text" name="nama_jurnal" id="nama_jurnal" 
+                            <input type="text" name="nama_jurnal" id="nama_jurnal"
                                    class="form-control @error('nama_jurnal') is-invalid @enderror"
                                    placeholder="Nama jurnal/publikasi" value="{{ old('nama_jurnal', $jurnal->nama_jurnal) }}">
                             @error('nama_jurnal')
@@ -62,11 +62,11 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="penerbit">Penerbit</label>
-                            <input type="text" name="penerbit" id="penerbit" 
+                            <input type="text" name="penerbit" id="penerbit"
                                    class="form-control @error('penerbit') is-invalid @enderror"
                                    placeholder="Nama penerbit jurnal" value="{{ old('penerbit', $jurnal->penerbit) }}">
                             @error('penerbit')
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
@@ -93,7 +93,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="status" class="required">Status</label>
@@ -110,7 +110,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="akreditasi">Akreditasi</label>
@@ -127,7 +127,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="tahun" class="required">Tahun</label>
@@ -147,7 +147,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Authors and Publication Details Card -->
         <div class="card">
             <div class="card-header">
@@ -164,7 +164,7 @@
                                 @if(old('penulis') || ($jurnal->penulis && count($jurnal->penulis) > 0))
                                     @foreach(old('penulis', $jurnal->penulis ?? ['']) as $penulis)
                                         <div class="input-group mb-2 penulis-item">
-                                            <input type="text" name="penulis[]" class="form-control" 
+                                            <input type="text" name="penulis[]" class="form-control"
                                                    placeholder="Nama penulis" value="{{ $penulis }}">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-danger remove-penulis" type="button">
@@ -193,12 +193,12 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="volume">Volume</label>
-                            <input type="text" name="volume" id="volume" 
+                            <input type="text" name="volume" id="volume"
                                    class="form-control @error('volume') is-invalid @enderror"
                                    placeholder="Volume jurnal" value="{{ old('volume', $jurnal->volume) }}">
                             @error('volume')
@@ -206,11 +206,11 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="nomor">Nomor</label>
-                            <input type="text" name="nomor" id="nomor" 
+                            <input type="text" name="nomor" id="nomor"
                                    class="form-control @error('nomor') is-invalid @enderror"
                                    placeholder="Nomor jurnal" value="{{ old('nomor', $jurnal->nomor) }}">
                             @error('nomor')
@@ -218,11 +218,11 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="halaman">Halaman</label>
-                            <input type="text" name="halaman" id="halaman" 
+                            <input type="text" name="halaman" id="halaman"
                                    class="form-control @error('halaman') is-invalid @enderror"
                                    placeholder="mis: 1-10" value="{{ old('halaman', $jurnal->halaman) }}">
                             @error('halaman')
@@ -230,11 +230,11 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="issn">ISSN</label>
-                            <input type="text" name="issn" id="issn" 
+                            <input type="text" name="issn" id="issn"
                                    class="form-control @error('issn') is-invalid @enderror"
                                    placeholder="mis: 1234-5678" value="{{ old('issn', $jurnal->issn) }}">
                             @error('issn')
@@ -245,7 +245,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Additional Information Card -->
         <div class="card">
             <div class="card-header">
@@ -258,7 +258,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="doi">DOI</label>
-                            <input type="text" name="doi" id="doi" 
+                            <input type="text" name="doi" id="doi"
                                    class="form-control @error('doi') is-invalid @enderror"
                                    placeholder="Digital Object Identifier" value="{{ old('doi', $jurnal->doi) }}">
                             @error('doi')
@@ -266,11 +266,11 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="url">URL</label>
-                            <input type="url" name="url" id="url" 
+                            <input type="url" name="url" id="url"
                                    class="form-control @error('url') is-invalid @enderror"
                                    placeholder="Link ke artikel jurnal" value="{{ old('url', $jurnal->url_jurnal) }}">
                             @error('url')
@@ -279,12 +279,12 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="abstrak">Abstrak</label>
-                            <textarea name="abstrak" id="abstrak" class="form-control @error('abstrak') is-invalid @enderror" 
+                            <textarea name="abstrak" id="abstrak" class="form-control @error('abstrak') is-invalid @enderror"
                                       rows="5" placeholder="Abstrak artikel jurnal">{{ old('abstrak', $jurnal->abstrak) }}</textarea>
                             @error('abstrak')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -292,14 +292,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="kata_kunci">Kata Kunci</label>
-                            <input type="text" name="kata_kunci" id="kata_kunci" 
+                            <input type="text" name="kata_kunci" id="kata_kunci"
                                    class="form-control @error('kata_kunci') is-invalid @enderror"
-                                   placeholder="Pisahkan dengan koma (,)" 
+                                   placeholder="Pisahkan dengan koma (,)"
                                    value="{{ old('kata_kunci', is_array($jurnal->kata_kunci) ? implode(', ', $jurnal->kata_kunci) : $jurnal->kata_kunci) }}">
                             <small class="form-text text-muted">Pisahkan setiap kata kunci dengan koma (,)</small>
                             @error('kata_kunci')
@@ -310,7 +310,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Files and Settings Card -->
         <div class="card">
             <div class="card-header">
@@ -335,7 +335,7 @@
                                 </div>
                             @endif
                             <div class="custom-file">
-                                <input type="file" name="file_pdf" id="file_pdf" 
+                                <input type="file" name="file_pdf" id="file_pdf"
                                        class="custom-file-input @error('file_pdf') is-invalid @enderror"
                                        accept=".pdf">
                                 <label class="custom-file-label" for="file_pdf">
@@ -348,7 +348,7 @@
                             @enderror
                         </div>
                     </div>
-                    
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="cover_image">Gambar Cover</label>
@@ -364,7 +364,7 @@
                                 </div>
                             @endif
                             <div class="custom-file">
-                                <input type="file" name="cover_image" id="cover_image" 
+                                <input type="file" name="cover_image" id="cover_image"
                                        class="custom-file-input @error('cover_image') is-invalid @enderror"
                                        accept="image/*">
                                 <label class="custom-file-label" for="cover_image">
@@ -378,12 +378,12 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input class="custom-control-input" type="checkbox" id="is_featured" 
+                                <input class="custom-control-input" type="checkbox" id="is_featured"
                                        name="is_featured" value="1" {{ old('is_featured', $jurnal->is_featured) ? 'checked' : '' }}>
                                 <label for="is_featured" class="custom-control-label">
                                     <strong>Tandai sebagai Featured</strong>
@@ -395,7 +395,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Action Buttons -->
         <div class="card">
             <div class="card-footer">
@@ -423,7 +423,7 @@ $(document).ready(function() {
         let fileName = $(this).val().split('\\').pop();
         $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
     });
-    
+
     // Add penulis functionality
     $('#add-penulis').click(function() {
         let newPenulis = `
@@ -438,14 +438,14 @@ $(document).ready(function() {
         `;
         $('#penulis-container').append(newPenulis);
     });
-    
+
     // Remove penulis functionality
     $(document).on('click', '.remove-penulis', function() {
         if ($('.penulis-item').length > 1) {
             $(this).closest('.penulis-item').remove();
         }
     });
-    
+
     // Add required indicator styles
     $('.required').addClass('font-weight-bold').append(' <span class="text-danger">*</span>');
 });

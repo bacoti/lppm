@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 
 @section('title', 'HAKI (Hak Kekayaan Intelektual)')
 
@@ -11,7 +11,7 @@
                 <h1 class="text-white mb-3">HAKI</h1>
                 <h2 class="text-white h3 mb-4">Hak Kekayaan Intelektual</h2>
                 <p class="text-white-50 lead mb-4">
-                    Kumpulan karya intelektual yang telah didaftarkan dan dilindungi hak kekayaan intelektualnya, 
+                    Kumpulan karya intelektual yang telah didaftarkan dan dilindungi hak kekayaan intelektualnya,
                     meliputi paten, merek dagang, hak cipta, dan desain industri.
                 </p>
                 <div class="d-flex flex-wrap gap-2">
@@ -95,12 +95,12 @@
     <div class="container">
         <div class="card border-0 shadow-sm">
             <div class="card-body">
-                <form method="GET" action="{{ route('haki.index') }}" class="row g-3">
+                <form method="GET" action="{{ route('frontend.haki') }}" class="row g-3">
                     <div class="col-md-4">
                         <label for="search" class="form-label">Pencarian</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-search"></i></span>
-                            <input type="text" name="search" id="search" class="form-control" 
+                            <input type="text" name="search" id="search" class="form-control"
                                    placeholder="Cari judul, inventor, atau deskripsi..."
                                    value="{{ request('search') }}">
                         </div>
@@ -144,98 +144,132 @@
 <!-- HAKI List Section -->
 <section class="py-5">
     <div class="container">
-        <div class="row">
-            @forelse($hakiList as $haki)
-            <div class="col-lg-6 mb-4">
-                <div class="card border-0 shadow-sm h-100 haki-card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="haki-type">
-                                <span class="badge badge-primary badge-pill">
-                                    @switch($haki->jenis_haki)
-                                        @case('paten')
-                                            <i class="fas fa-lightbulb mr-1"></i>
-                                            @break
-                                        @case('hak_cipta')
-                                            <i class="fas fa-copyright mr-1"></i>
-                                            @break
-                                        @case('merek')
-                                            <i class="fas fa-trademark mr-1"></i>
-                                            @break
-                                        @case('desain_industri')
-                                            <i class="fas fa-drafting-compass mr-1"></i>
-                                            @break
-                                        @default
-                                            <i class="fas fa-file mr-1"></i>
-                                    @endswitch
-                                    {{ $haki->getJenisHakiLabel() }}
-                                </span>
-                            </div>
-                            <span class="badge {{ $haki->getStatusBadgeClass() }}">
-                                {{ $haki->getStatusLabel() }}
-                            </span>
-                        </div>
-
-                        <h5 class="card-title mb-3">
-                            <a href="{{ route('haki.show', $haki->slug) }}" class="text-dark text-decoration-none">
-                                {{ $haki->judul }}
-                            </a>
-                        </h5>
-
-                        @if($haki->deskripsi)
-                        <p class="card-text text-muted mb-3">
-                            {{ Str::limit($haki->deskripsi, 120) }}
-                        </p>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <h4 class="mb-0"><i class="fas fa-shield-alt mr-2"></i>Daftar HAKI</h4>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="badge badge-light">{{ $hakiList->total() }} HAKI tersedia</span>
+                        @if($hakiList->hasPages())
+                        <span class="badge badge-light">Halaman {{ $hakiList->currentPage() }} dari {{ $hakiList->lastPage() }}</span>
                         @endif
-
-                        <!-- Inventor Section -->
-                        @if($haki->inventor && count($haki->inventor) > 0)
-                        <div class="mb-3">
-                            <small class="text-muted d-block mb-1">
-                                <i class="fas fa-users mr-1"></i>Inventor:
-                            </small>
-                            <div class="inventor-list">
-                                @foreach(array_slice($haki->inventor, 0, 2) as $inventor)
-                                    <span class="badge badge-outline-secondary mr-1">{{ $inventor }}</span>
-                                @endforeach
-                                @if(count($haki->inventor) > 2)
-                                    <span class="badge badge-light">+{{ count($haki->inventor) - 2 }} lainnya</span>
-                                @endif
-                            </div>
-                        </div>
+                        @if(request('jenis_haki'))
+                        <span class="badge badge-info">{{ $jenisHakiOptions[request('jenis_haki')] ?? 'Filter Aktif' }}</span>
                         @endif
-
-                        <!-- Info Details -->
-                        <div class="row text-muted small mb-3">
-                            @if($haki->nomor_pendaftaran)
-                            <div class="col-6">
-                                <i class="fas fa-hashtag mr-1"></i>
-                                {{ $haki->nomor_pendaftaran }}
-                            </div>
-                            @endif
-                            @if($haki->tanggal_daftar)
-                            <div class="col-6">
-                                <i class="fas fa-calendar mr-1"></i>
-                                {{ $haki->tanggal_daftar->format('M Y') }}
-                            </div>
-                            @endif
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="{{ route('haki.show', $haki->slug) }}" class="btn btn-outline-primary btn-sm">
-                                <i class="fas fa-eye mr-1"></i>Lihat Detail
-                            </a>
-                            @if($haki->bidang_teknologi)
-                            <small class="text-muted">
-                                <i class="fas fa-tag mr-1"></i>{{ $haki->bidang_teknologi }}
-                            </small>
-                            @endif
-                        </div>
+                        @if(request('status'))
+                        <span class="badge badge-warning">{{ $statusOptions[request('status')] ?? 'Status Filter' }}</span>
+                        @endif
                     </div>
                 </div>
             </div>
-            @empty
-            <div class="col-12">
+            <div class="card-body p-0">
+                @forelse($hakiList as $haki)
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-bordered mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th width="5%" class="text-center">#</th>
+                                <th width="25%">Judul HAKI</th>
+                                <th width="15%">Jenis HAKI</th>
+                                <th width="20%">Inventor</th>
+                                <th width="10%">Status</th>
+                                <th width="10%">Tanggal</th>
+                                <th width="15%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">{{ $hakiList->firstItem() + $loop->index }}</td>
+                                <td>
+                                    <div class="d-flex align-items-start">
+                                        <div class="flex-grow-1">
+                                            <strong>
+                                                @if($haki->slug)
+                                                    <a href="{{ route('frontend.haki.show', $haki->slug) }}" class="text-decoration-none text-dark">
+                                                        {{ $haki->judul }}
+                                                    </a>
+                                                @else
+                                                    <span class="text-dark">{{ $haki->judul }}</span>
+                                                @endif
+                                            </strong>
+                                            @if($haki->deskripsi)
+                                            <br>
+                                            <small class="text-muted">{{ Str::limit($haki->deskripsi, 60) }}</small>
+                                            @endif
+                                            @if($haki->nomor_pendaftaran)
+                                            <br>
+                                            <small class="text-muted">
+                                                <i class="fas fa-hashtag mr-1"></i>{{ $haki->nomor_pendaftaran }}
+                                            </small>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge badge-primary">
+                                        @switch($haki->jenis_haki)
+                                            @case('paten')
+                                                <i class="fas fa-lightbulb mr-1"></i>
+                                                @break
+                                            @case('hak_cipta')
+                                                <i class="fas fa-copyright mr-1"></i>
+                                                @break
+                                            @case('merek')
+                                                <i class="fas fa-trademark mr-1"></i>
+                                                @break
+                                            @case('desain_industri')
+                                                <i class="fas fa-drafting-compass mr-1"></i>
+                                                @break
+                                            @default
+                                                <i class="fas fa-file mr-1"></i>
+                                        @endswitch
+                                        {{ $haki->getJenisHakiLabel() }}
+                                    </span>
+                                    @if($haki->bidang_teknologi)
+                                    <br>
+                                    <small class="text-muted">{{ $haki->bidang_teknologi }}</small>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($haki->inventor && count($haki->inventor) > 0)
+                                        @foreach(array_slice($haki->inventor, 0, 2) as $inventor)
+                                            <span class="badge badge-outline-secondary mr-1 mb-1">{{ $inventor }}</span>
+                                        @endforeach
+                                        @if(count($haki->inventor) > 2)
+                                            <br><small class="text-muted">+{{ count($haki->inventor) - 2 }} lainnya</small>
+                                        @endif
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge {{ $haki->getStatusBadgeClass() }}">
+                                        {{ $haki->getStatusLabel() }}
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    @if($haki->tanggal_daftar)
+                                        {{ $haki->tanggal_daftar->format('d/m/Y') }}
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    @if($haki->slug)
+                                        <a href="{{ route('frontend.haki.show', $haki->slug) }}" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-eye"></i> Detail
+                                        </a>
+                                    @else
+                                        <button class="btn btn-secondary btn-sm" disabled>
+                                            <i class="fas fa-eye"></i> Tidak tersedia
+                                        </button>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @empty
                 <div class="text-center py-5">
                     <div class="mb-4">
                         <i class="fas fa-search fa-4x text-muted"></i>
@@ -243,24 +277,33 @@
                     <h4 class="text-muted mb-3">Tidak ada data HAKI ditemukan</h4>
                     <p class="text-muted mb-4">
                         @if(request()->hasAny(['search', 'jenis_haki', 'status']))
-                            Coba ubah kriteria pencarian atau filter Anda.
+                            Coba ubah kriteria pencarian atau filter Anda untuk menemukan data HAKI yang diinginkan.
                         @else
-                            Belum ada data HAKI yang tersedia saat ini.
+                            Belum ada data HAKI yang dipublikasikan saat ini.
                         @endif
                     </p>
                     @if(request()->hasAny(['search', 'jenis_haki', 'status']))
-                    <a href="{{ route('haki.index') }}" class="btn btn-primary">
-                        <i class="fas fa-refresh mr-1"></i>Reset Filter
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="{{ route('frontend.haki') }}" class="btn btn-primary">
+                            <i class="fas fa-refresh mr-1"></i>Reset Filter
+                        </a>
+                        <a href="{{ route('home') }}" class="btn btn-secondary">
+                            <i class="fas fa-home mr-1"></i>Kembali ke Beranda
+                        </a>
+                    </div>
+                    @else
+                    <a href="{{ route('home') }}" class="btn btn-primary">
+                        <i class="fas fa-home mr-1"></i>Kembali ke Beranda
                     </a>
                     @endif
                 </div>
+                @endforelse
             </div>
-            @endforelse
         </div>
 
         <!-- Pagination -->
         @if($hakiList->hasPages())
-        <div class="row">
+        <div class="row mt-4">
             <div class="col-12">
                 <div class="d-flex justify-content-center">
                     {{ $hakiList->appends(request()->query())->links() }}
@@ -321,13 +364,26 @@
     margin-bottom: 0.25rem;
 }
 
+.table th {
+    vertical-align: middle;
+    font-weight: 600;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
 @media (max-width: 768px) {
     .hero-section {
         text-align: center;
     }
-    
-    .haki-card {
-        margin-bottom: 1rem;
+
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+
+    .table th, .table td {
+        padding: 0.5rem;
     }
 }
 </style>

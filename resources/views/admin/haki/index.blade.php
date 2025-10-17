@@ -36,8 +36,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="search">Kata Kunci</label>
-                                    <input type="text" name="search" id="search" class="form-control" 
-                                           placeholder="Cari judul, nomor pendaftaran..." 
+                                    <input type="text" name="search" id="search" class="form-control"
+                                           placeholder="Cari judul, nomor pendaftaran..."
                                            value="{{ request('search') }}">
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                         </a>
                     </div>
                 </div>
-                
+
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
                         <thead>
@@ -146,15 +146,15 @@
                                     <td>{{ $haki->tanggal_daftar ? $haki->tanggal_daftar->format('d/m/Y') : '-' }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.haki.show', $haki) }}" 
+                                            <a href="{{ route('admin.haki.show', $haki) }}"
                                                class="btn btn-info btn-sm" title="Lihat Detail">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('admin.haki.edit', $haki) }}" 
+                                            <a href="{{ route('admin.haki.edit', $haki) }}"
                                                class="btn btn-warning btn-sm" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('admin.haki.destroy', $haki) }}" 
+                                            <form action="{{ route('admin.haki.destroy', $haki) }}"
                                                   method="POST" class="d-inline"
                                                   onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                                 @csrf
@@ -179,12 +179,12 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 @if($hakis->hasPages())
                 <div class="card-footer">
                     <div class="d-flex justify-content-between align-items-center">
                         <small class="text-muted">
-                            Menampilkan {{ $hakis->firstItem() }} - {{ $hakis->lastItem() }} 
+                            Menampilkan {{ $hakis->firstItem() }} - {{ $hakis->lastItem() }}
                             dari {{ $hakis->total() }} data
                         </small>
                         {{ $hakis->withQueryString()->links() }}

@@ -8,36 +8,36 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         height: 100%;
     }
-    
+
     .jurnal-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     }
-    
+
     .jurnal-cover {
         height: 200px;
         object-fit: cover;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
-    
+
     .jurnal-cover img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    
+
     .jurnal-title {
         font-size: 1.1rem;
         font-weight: 600;
         color: #2d3748;
         line-height: 1.4;
     }
-    
+
     .jurnal-meta {
         font-size: 0.85rem;
         color: #718096;
     }
-    
+
     .featured-badge {
         position: absolute;
         top: 10px;
@@ -49,7 +49,7 @@
         font-size: 0.75rem;
         font-weight: 600;
     }
-    
+
     .filter-section {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -57,20 +57,20 @@
         padding: 2rem;
         margin-bottom: 2rem;
     }
-    
+
     .search-box {
         border-radius: 25px;
         border: none;
         padding: 12px 20px;
         font-size: 1rem;
     }
-    
+
     .btn-search {
         border-radius: 25px;
         padding: 12px 25px;
         font-weight: 600;
     }
-    
+
     .stats-card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
@@ -79,29 +79,29 @@
         text-align: center;
         margin-bottom: 2rem;
     }
-    
+
     .stats-number {
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
     }
-    
+
     .pagination {
         justify-content: center;
     }
-    
+
     .page-link {
         color: #667eea;
         border: 1px solid #e2e8f0;
         margin: 0 2px;
         border-radius: 8px;
     }
-    
+
     .page-link:hover {
         color: #764ba2;
         background-color: #f7fafc;
     }
-    
+
     .page-item.active .page-link {
         background-color: #667eea;
         border-color: #667eea;
@@ -135,8 +135,8 @@
             <div class="row align-items-end">
                 <div class="col-lg-4 mb-3">
                     <label for="search" class="form-label font-weight-semibold">Cari Jurnal</label>
-                    <input type="text" name="search" id="search" class="form-control search-box" 
-                           placeholder="Judul, penulis, jurnal..." 
+                    <input type="text" name="search" id="search" class="form-control search-box"
+                           placeholder="Judul, penulis, jurnal..."
                            value="{{ request('search') }}">
                 </div>
                 <div class="col-lg-2 mb-3">
@@ -191,7 +191,7 @@
     @if(request()->hasAny(['search', 'jenis_jurnal', 'akreditasi', 'tahun']))
         <div class="alert alert-info">
             <i class="fas fa-info-circle mr-2"></i>
-            Menampilkan {{ $jurnals->total() }} hasil untuk 
+            Menampilkan {{ $jurnals->total() }} hasil untuk
             @if(request('search'))
                 pencarian "<strong>{{ request('search') }}</strong>"
             @endif
@@ -220,7 +220,7 @@
                             <div class="featured-badge">
                                 <i class="fas fa-star mr-1"></i>Featured
                             </div>
-                            
+
                             <div class="jurnal-cover">
                                 @if($jurnal->cover_image)
                                     <img src="{{ Storage::url($jurnal->cover_image) }}" alt="Cover {{ $jurnal->judul }}">
@@ -230,10 +230,10 @@
                                     </div>
                                 @endif
                             </div>
-                            
+
                             <div class="card-body">
                                 <h5 class="jurnal-title mb-2">{{ Str::limit($jurnal->judul, 80) }}</h5>
-                                
+
                                 <div class="jurnal-meta mb-3">
                                     <div class="mb-1">
                                         <i class="fas fa-book-open mr-1"></i>{{ $jurnal->nama_jurnal }}
@@ -247,7 +247,7 @@
                                         <i class="fas fa-calendar mr-1"></i>{{ $jurnal->tahun }}
                                     </div>
                                 </div>
-                                
+
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <span class="badge badge-primary badge-pill">{{ \App\Models\Jurnal::getJenisJurnalOptions()[$jurnal->jenis_jurnal] }}</span>
@@ -272,7 +272,7 @@
         <h2 class="section-title mb-4">
             <i class="fas fa-list mr-2"></i>Semua Jurnal
         </h2>
-        
+
         @if($jurnals->count() > 0)
             <div class="row">
                 @foreach($jurnals as $jurnal)
@@ -283,7 +283,7 @@
                                     <i class="fas fa-star mr-1"></i>Featured
                                 </div>
                             @endif
-                            
+
                             <div class="jurnal-cover">
                                 @if($jurnal->cover_image)
                                     <img src="{{ Storage::url($jurnal->cover_image) }}" alt="Cover {{ $jurnal->judul }}">
@@ -293,10 +293,10 @@
                                     </div>
                                 @endif
                             </div>
-                            
+
                             <div class="card-body">
                                 <h5 class="jurnal-title mb-2">{{ Str::limit($jurnal->judul, 80) }}</h5>
-                                
+
                                 <div class="jurnal-meta mb-3">
                                     <div class="mb-1">
                                         <i class="fas fa-book-open mr-1"></i>{{ $jurnal->nama_jurnal }}
@@ -310,7 +310,7 @@
                                         <i class="fas fa-calendar mr-1"></i>{{ $jurnal->tahun }}
                                     </div>
                                 </div>
-                                
+
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         <span class="badge badge-primary badge-pill">{{ \App\Models\Jurnal::getJenisJurnalOptions()[$jurnal->jenis_jurnal] }}</span>
@@ -327,7 +327,7 @@
                     </div>
                 @endforeach
             </div>
-            
+
             <!-- Pagination -->
             @if($jurnals->hasPages())
                 <div class="d-flex justify-content-center mt-4">
@@ -355,7 +355,7 @@ $(document).ready(function() {
     $('#jenis_jurnal, #akreditasi, #tahun').change(function() {
         $(this).closest('form').submit();
     });
-    
+
     // Search on enter
     $('#search').keypress(function(e) {
         if (e.which == 13) {

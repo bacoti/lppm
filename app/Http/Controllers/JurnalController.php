@@ -64,8 +64,8 @@ class JurnalController extends Controller
         $totalJurnals = Jurnal::published()->count();
 
         return view('jurnal.index', compact(
-            'jurnals', 
-            'featuredJurnals', 
+            'jurnals',
+            'featuredJurnals',
             'totalJurnals'
         ));
     }
@@ -111,7 +111,7 @@ class JurnalController extends Controller
         $jurnal->incrementDownloads();
 
         $filePath = storage_path('app/public/' . $jurnal->file_pdf);
-        
+
         if (!file_exists($filePath)) {
             abort(404);
         }

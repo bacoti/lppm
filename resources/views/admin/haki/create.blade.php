@@ -27,7 +27,7 @@
 <div class="container-fluid">
     <form action="{{ route('admin.haki.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-                
+
                 <!-- Informasi Dasar -->
                 <div class="card card-primary card-outline">
                     <div class="card-header">
@@ -47,9 +47,9 @@
                                     <label for="judul" class="form-label fw-bold">
                                         Judul HAKI <span class="text-danger">*</span>
                                     </label>
-                                    <input type="text" name="judul" id="judul" 
-                                           class="form-control @error('judul') is-invalid @enderror" 
-                                           value="{{ old('judul') }}" 
+                                    <input type="text" name="judul" id="judul"
+                                           class="form-control @error('judul') is-invalid @enderror"
+                                           value="{{ old('judul') }}"
                                            placeholder="Masukkan judul HAKI" required>
                                     @error('judul')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -61,7 +61,7 @@
                                     <label for="jenis_haki" class="form-label fw-bold">
                                         Jenis HAKI <span class="text-danger">*</span>
                                     </label>
-                                    <select name="jenis_haki" id="jenis_haki" 
+                                    <select name="jenis_haki" id="jenis_haki"
                                             class="form-control select2 @error('jenis_haki') is-invalid @enderror" required>
                                         <option value="">Pilih Jenis HAKI</option>
                                         @foreach($jenisHakiOptions as $key => $label)
@@ -80,7 +80,7 @@
                                     <label for="status" class="form-label fw-bold">
                                         Status <span class="text-danger">*</span>
                                     </label>
-                                    <select name="status" id="status" 
+                                    <select name="status" id="status"
                                             class="form-control select2 @error('status') is-invalid @enderror" required>
                                         @foreach($statusOptions as $key => $label)
                                             <option value="{{ $key }}" {{ old('status', 'draft') == $key ? 'selected' : '' }}>
@@ -94,10 +94,10 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="deskripsi" class="form-label fw-bold">Deskripsi</label>
-                            <textarea name="deskripsi" id="deskripsi" rows="4" 
+                            <textarea name="deskripsi" id="deskripsi" rows="4"
                                       class="form-control @error('deskripsi') is-invalid @enderror"
                                       placeholder="Masukkan deskripsi HAKI">{{ old('deskripsi') }}</textarea>
                             @error('deskripsi')
@@ -109,8 +109,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="bidang_teknologi" class="form-label fw-bold">Bidang Teknologi</label>
-                                    <input type="text" name="bidang_teknologi" id="bidang_teknologi" 
-                                           class="form-control @error('bidang_teknologi') is-invalid @enderror" 
+                                    <input type="text" name="bidang_teknologi" id="bidang_teknologi"
+                                           class="form-control @error('bidang_teknologi') is-invalid @enderror"
                                            value="{{ old('bidang_teknologi') }}"
                                            placeholder="Contoh: Teknologi Informasi, Teknik Sipil">
                                     @error('bidang_teknologi')
@@ -123,8 +123,8 @@
                                     <label for="klasifikasi" class="form-label fw-bold">
                                         Klasifikasi (IPC untuk Paten)
                                     </label>
-                                    <input type="text" name="klasifikasi" id="klasifikasi" 
-                                           class="form-control @error('klasifikasi') is-invalid @enderror" 
+                                    <input type="text" name="klasifikasi" id="klasifikasi"
+                                           class="form-control @error('klasifikasi') is-invalid @enderror"
                                            value="{{ old('klasifikasi') }}"
                                            placeholder="Contoh: G06F 17/30">
                                     @error('klasifikasi')
@@ -158,9 +158,9 @@
                             <div class="inventor-row mb-3">
                                 <label class="form-label fw-bold">Inventor/Pencipta 1 <span class="text-danger">*</span></label>
                                 <div class="input-group">
-                                    <input type="text" name="inventor[]" 
-                                           class="form-control @error('inventor.0') is-invalid @enderror" 
-                                           placeholder="Masukkan nama lengkap inventor/pencipta" 
+                                    <input type="text" name="inventor[]"
+                                           class="form-control @error('inventor.0') is-invalid @enderror"
+                                           placeholder="Masukkan nama lengkap inventor/pencipta"
                                            value="{{ old('inventor.0') }}" required>
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-success add-inventor" title="Tambah Inventor">
@@ -200,8 +200,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                         </div>
-                                        <input type="text" name="nomor_pendaftaran" id="nomor_pendaftaran" 
-                                               class="form-control @error('nomor_pendaftaran') is-invalid @enderror" 
+                                        <input type="text" name="nomor_pendaftaran" id="nomor_pendaftaran"
+                                               class="form-control @error('nomor_pendaftaran') is-invalid @enderror"
                                                value="{{ old('nomor_pendaftaran') }}"
                                                placeholder="Contoh: P00202100123">
                                     </div>
@@ -217,8 +217,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
                                         </div>
-                                        <input type="text" name="nomor_publikasi" id="nomor_publikasi" 
-                                               class="form-control @error('nomor_publikasi') is-invalid @enderror" 
+                                        <input type="text" name="nomor_publikasi" id="nomor_publikasi"
+                                               class="form-control @error('nomor_publikasi') is-invalid @enderror"
                                                value="{{ old('nomor_publikasi') }}"
                                                placeholder="Contoh: ID0000012345">
                                     </div>
@@ -234,8 +234,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-certificate"></i></span>
                                         </div>
-                                        <input type="text" name="nomor_sertifikat" id="nomor_sertifikat" 
-                                               class="form-control @error('nomor_sertifikat') is-invalid @enderror" 
+                                        <input type="text" name="nomor_sertifikat" id="nomor_sertifikat"
+                                               class="form-control @error('nomor_sertifikat') is-invalid @enderror"
                                                value="{{ old('nomor_sertifikat') }}"
                                                placeholder="Nomor sertifikat">
                                     </div>
@@ -254,8 +254,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input type="date" name="tanggal_daftar" id="tanggal_daftar" 
-                                               class="form-control @error('tanggal_daftar') is-invalid @enderror" 
+                                        <input type="date" name="tanggal_daftar" id="tanggal_daftar"
+                                               class="form-control @error('tanggal_daftar') is-invalid @enderror"
                                                value="{{ old('tanggal_daftar') }}">
                                     </div>
                                     @error('tanggal_daftar')
@@ -270,8 +270,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input type="date" name="tanggal_publikasi" id="tanggal_publikasi" 
-                                               class="form-control @error('tanggal_publikasi') is-invalid @enderror" 
+                                        <input type="date" name="tanggal_publikasi" id="tanggal_publikasi"
+                                               class="form-control @error('tanggal_publikasi') is-invalid @enderror"
                                                value="{{ old('tanggal_publikasi') }}">
                                     </div>
                                     @error('tanggal_publikasi')
@@ -286,8 +286,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                         </div>
-                                        <input type="date" name="tanggal_granted" id="tanggal_granted" 
-                                               class="form-control @error('tanggal_granted') is-invalid @enderror" 
+                                        <input type="date" name="tanggal_granted" id="tanggal_granted"
+                                               class="form-control @error('tanggal_granted') is-invalid @enderror"
                                                value="{{ old('tanggal_granted') }}">
                                     </div>
                                     @error('tanggal_granted')
@@ -298,8 +298,8 @@
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
                                     <label for="kantor_kekayaan_intelektual" class="form-label fw-bold">Kantor KI</label>
-                                    <input type="text" name="kantor_kekayaan_intelektual" id="kantor_kekayaan_intelektual" 
-                                           class="form-control @error('kantor_kekayaan_intelektual') is-invalid @enderror" 
+                                    <input type="text" name="kantor_kekayaan_intelektual" id="kantor_kekayaan_intelektual"
+                                           class="form-control @error('kantor_kekayaan_intelektual') is-invalid @enderror"
                                            value="{{ old('kantor_kekayaan_intelektual', 'DJKI Indonesia') }}"
                                            placeholder="DJKI Indonesia">
                                     @error('kantor_kekayaan_intelektual')
@@ -317,8 +317,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
                                         </div>
-                                        <input type="date" name="tanggal_berlaku_mulai" id="tanggal_berlaku_mulai" 
-                                               class="form-control @error('tanggal_berlaku_mulai') is-invalid @enderror" 
+                                        <input type="date" name="tanggal_berlaku_mulai" id="tanggal_berlaku_mulai"
+                                               class="form-control @error('tanggal_berlaku_mulai') is-invalid @enderror"
                                                value="{{ old('tanggal_berlaku_mulai') }}">
                                     </div>
                                     @error('tanggal_berlaku_mulai')
@@ -333,8 +333,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-calendar-times"></i></span>
                                         </div>
-                                        <input type="date" name="tanggal_berlaku_selesai" id="tanggal_berlaku_selesai" 
-                                               class="form-control @error('tanggal_berlaku_selesai') is-invalid @enderror" 
+                                        <input type="date" name="tanggal_berlaku_selesai" id="tanggal_berlaku_selesai"
+                                               class="form-control @error('tanggal_berlaku_selesai') is-invalid @enderror"
                                                value="{{ old('tanggal_berlaku_selesai') }}">
                                     </div>
                                     @error('tanggal_berlaku_selesai')
@@ -346,7 +346,7 @@
                                 <div class="form-group">
                                     <label class="form-label fw-bold">&nbsp;</label>
                                     <div class="icheck-primary">
-                                        <input type="checkbox" name="diperpanjang" id="diperpanjang" 
+                                        <input type="checkbox" name="diperpanjang" id="diperpanjang"
                                                value="1" {{ old('diperpanjang') ? 'checked' : '' }}>
                                         <label for="diperpanjang" class="font-weight-normal">
                                             <i class="fas fa-redo mr-1"></i>Diperpanjang
@@ -377,7 +377,7 @@
                                     <label for="file_dokumen" class="form-label fw-bold">File Dokumen</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" name="file_dokumen" id="file_dokumen" 
+                                            <input type="file" name="file_dokumen" id="file_dokumen"
                                                    class="custom-file-input @error('file_dokumen') is-invalid @enderror"
                                                    accept=".pdf,.doc,.docx">
                                             <label class="custom-file-label" for="file_dokumen">Pilih file dokumen...</label>
@@ -396,7 +396,7 @@
                                     <label for="file_sertifikat" class="form-label fw-bold">File Sertifikat</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" name="file_sertifikat" id="file_sertifikat" 
+                                            <input type="file" name="file_sertifikat" id="file_sertifikat"
                                                    class="custom-file-input @error('file_sertifikat') is-invalid @enderror"
                                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
                                             <label class="custom-file-label" for="file_sertifikat">Pilih file sertifikat...</label>
@@ -414,7 +414,7 @@
 
                         <div class="form-group">
                             <label for="catatan" class="form-label fw-bold">Catatan</label>
-                            <textarea name="catatan" id="catatan" rows="3" 
+                            <textarea name="catatan" id="catatan" rows="3"
                                       class="form-control @error('catatan') is-invalid @enderror"
                                       placeholder="Tambahkan catatan atau keterangan tambahan jika diperlukan">{{ old('catatan') }}</textarea>
                             @error('catatan')
@@ -583,20 +583,20 @@
     .card-body {
         padding: 15px;
     }
-    
+
     .btn-lg {
         width: 100%;
         margin-bottom: 10px;
     }
-    
+
     .text-right {
         text-align: left !important;
     }
-    
+
     .inventor-row {
         padding: 10px;
     }
-    
+
     .form-group {
         margin-bottom: 20px;
     }
@@ -643,14 +643,14 @@ $(document).ready(function() {
 
     // Handle inventor add/remove
     let inventorCount = 1;
-    
+
     $(document).on('click', '.add-inventor', function() {
         inventorCount++;
         const inventorRow = `
             <div class="inventor-row mb-3">
                 <label class="form-label fw-bold">Inventor/Pencipta ${inventorCount}</label>
                 <div class="input-group">
-                    <input type="text" name="inventor[]" class="form-control" 
+                    <input type="text" name="inventor[]" class="form-control"
                            placeholder="Masukkan nama lengkap inventor/pencipta" required>
                     <div class="input-group-append">
                         <button type="button" class="btn btn-danger remove-inventor" title="Hapus Inventor">
@@ -661,11 +661,11 @@ $(document).ready(function() {
             </div>
         `;
         $('#inventor-container').append(inventorRow);
-        
+
         // Update numbering
         updateInventorLabels();
     });
-    
+
     $(document).on('click', '.remove-inventor', function() {
         $(this).closest('.inventor-row').remove();
         inventorCount--;
@@ -691,7 +691,7 @@ $(document).ready(function() {
     // Form validation enhancement
     $('form').on('submit', function(e) {
         let hasError = false;
-        
+
         // Check required fields
         $(this).find('input[required], select[required], textarea[required]').each(function() {
             if (!$(this).val()) {
@@ -710,7 +710,7 @@ $(document).ready(function() {
                 text: 'Harap lengkapi semua field yang wajib diisi.',
                 showConfirmButton: true
             });
-            
+
             // Scroll to first error
             $('html, body').animate({
                 scrollTop: $('.is-invalid').first().offset().top - 100

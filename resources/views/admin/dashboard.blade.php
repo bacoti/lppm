@@ -47,7 +47,7 @@
                 @endif
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-6">
             <!-- Total Content -->
             <div class="small-box bg-success">
@@ -69,7 +69,7 @@
                 @endif
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-6">
             <!-- Total Research -->
             <div class="small-box bg-warning">
@@ -91,7 +91,7 @@
                 @endif
             </div>
         </div>
-        
+
         <div class="col-lg-3 col-6">
             <!-- Total HAKI -->
             <div class="small-box bg-danger">
@@ -137,7 +137,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-4">
             <!-- Quick Actions -->
             <div class="card card-success card-outline">
@@ -153,25 +153,25 @@
                             <i class="fas fa-user-plus mr-2"></i>Tambah Dosen
                         </a>
                         @endif
-                        
+
                         @if(Route::has('admin.contents.create'))
                         <a href="{{ route('admin.contents.create') }}" class="btn btn-success btn-sm">
                             <i class="fas fa-plus mr-2"></i>Tambah Konten
                         </a>
                         @endif
-                        
+
                         @if(Route::has('admin.researches.create'))
                         <a href="{{ route('admin.researches.create') }}" class="btn btn-warning btn-sm">
                             <i class="fas fa-microscope mr-2"></i>Tambah Penelitian
                         </a>
                         @endif
-                        
+
                         @if(Route::has('admin.haki.create'))
                         <a href="{{ route('admin.haki.create') }}" class="btn btn-danger btn-sm">
                             <i class="fas fa-copyright mr-2"></i>Tambah HAKI
                         </a>
                         @endif
-                        
+
                         @if(Route::has('admin.qualifications.create'))
                         <a href="{{ route('admin.qualifications.create') }}" class="btn btn-secondary btn-sm">
                             <i class="fas fa-graduation-cap mr-2"></i>Tambah Kualifikasi
@@ -250,7 +250,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-6">
             <!-- Recent Dosen -->
             <div class="card card-info card-outline">
@@ -509,13 +509,13 @@
     .small-box .inner h3 {
         font-size: 1.8rem;
     }
-    
+
     .small-box .icon {
         font-size: 50px;
         top: 15px;
         right: 15px;
     }
-    
+
     .d-grid.gap-2 > * {
         margin-bottom: 10px;
     }
@@ -640,7 +640,7 @@ $(document).ready(function() {
     $('.small-box .inner h3').each(function() {
         const $this = $(this);
         const countTo = parseInt($this.text()) || 0;
-        
+
         $({ countNum: 0 }).animate({
             countNum: countTo
         }, {
@@ -660,7 +660,7 @@ $(document).ready(function() {
         // Add refresh indicator
         const refreshBtn = '<i class="fas fa-sync-alt fa-spin ml-2"></i>';
         $('.content-header h1').append(refreshBtn);
-        
+
         // Remove after 2 seconds
         setTimeout(function() {
             $('.fa-sync-alt').remove();
@@ -687,12 +687,12 @@ $(document).ready(function() {
 // Real-time clock update
 function updateClock() {
     const now = new Date();
-    const timeString = now.toLocaleTimeString('id-ID', { 
-        hour: '2-digit', 
+    const timeString = now.toLocaleTimeString('id-ID', {
+        hour: '2-digit',
         minute: '2-digit',
         second: '2-digit'
     });
-    
+
     $('.info-box-number').last().text(timeString);
 }
 

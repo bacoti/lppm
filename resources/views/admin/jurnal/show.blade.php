@@ -68,7 +68,7 @@
                             <h4 class="text-primary mb-3">{{ $jurnal->judul }}</h4>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="info-item mb-3">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-3">
                             <div class="info-item mb-3">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Authors Card -->
             @if($jurnal->penulis && count($jurnal->penulis) > 0)
             <div class="card">
@@ -151,7 +151,7 @@
                 </div>
             </div>
             @endif
-            
+
             <!-- Publication Details Card -->
             <div class="card">
                 <div class="card-header">
@@ -186,7 +186,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="info-item mb-3">
@@ -221,7 +221,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Abstract Card -->
             @if($jurnal->abstrak)
             <div class="card">
@@ -235,7 +235,7 @@
                 </div>
             </div>
             @endif
-            
+
             <!-- Keywords Card -->
             @if($jurnal->kata_kunci && count($jurnal->kata_kunci) > 0)
             <div class="card">
@@ -252,7 +252,7 @@
             </div>
             @endif
         </div>
-        
+
         <!-- Sidebar -->
         <div class="col-md-4">
             <!-- Cover Image Card -->
@@ -264,13 +264,13 @@
                     </h3>
                 </div>
                 <div class="card-body text-center">
-                    <img src="{{ Storage::url($jurnal->cover_image) }}" 
-                         alt="Cover {{ $jurnal->judul }}" 
+                    <img src="{{ Storage::url($jurnal->cover_image) }}"
+                         alt="Cover {{ $jurnal->judul }}"
                          class="img-fluid rounded shadow-sm">
                 </div>
             </div>
             @endif
-            
+
             <!-- Files Card -->
             <div class="card">
                 <div class="card-header">
@@ -281,7 +281,7 @@
                 <div class="card-body">
                     @if($jurnal->file_pdf)
                         <div class="d-grid gap-2">
-                            <a href="{{ Storage::url($jurnal->file_pdf) }}" 
+                            <a href="{{ Storage::url($jurnal->file_pdf) }}"
                                target="_blank" class="btn btn-primary btn-block">
                                 <i class="fas fa-file-pdf mr-2"></i>Download PDF
                             </a>
@@ -298,7 +298,7 @@
                     @endif
                 </div>
             </div>
-            
+
             <!-- Statistics Card -->
             <div class="card">
                 <div class="card-header">
@@ -321,7 +321,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Metadata Card -->
             <div class="card">
                 <div class="card-header">

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             ContentSeeder::class,
             ServiceSeeder::class,
+            DokumenSeeder::class,
         ]);
     }
 

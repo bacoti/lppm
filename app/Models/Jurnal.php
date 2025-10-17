@@ -56,13 +56,13 @@ class Jurnal extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::creating(function ($jurnal) {
             if (empty($jurnal->slug)) {
                 $jurnal->slug = Str::slug($jurnal->judul);
             }
         });
-        
+
         static::updating(function ($jurnal) {
             if ($jurnal->isDirty('judul')) {
                 $jurnal->slug = Str::slug($jurnal->judul);

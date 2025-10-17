@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 
 @section('title', $haki->judul . ' - HAKI')
 
@@ -9,7 +9,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('haki.index') }}">HAKI</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('frontend.haki') }}">HAKI</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($haki->judul, 30) }}</li>
             </ol>
         </nav>
@@ -77,7 +77,7 @@
                             <div class="col-md-6 mb-3">
                                 <div class="d-flex align-items-center">
                                     <div class="inventor-number mr-3">
-                                        <div class="rounded-circle bg-success d-flex align-items-center justify-content-center text-white font-weight-bold" 
+                                        <div class="rounded-circle bg-success d-flex align-items-center justify-content-center text-white font-weight-bold"
                                              style="width: 40px; height: 40px;">
                                             {{ $index + 1 }}
                                         </div>
@@ -160,7 +160,7 @@
                                         <i class="fas fa-file-pdf fa-3x text-danger"></i>
                                     </div>
                                     <h6 class="mb-2">File Dokumen</h6>
-                                    <a href="{{ Storage::url($haki->file_dokumen) }}" 
+                                    <a href="{{ Storage::url($haki->file_dokumen) }}"
                                        class="btn btn-outline-danger btn-sm" target="_blank">
                                         <i class="fas fa-download mr-1"></i>Download
                                     </a>
@@ -175,7 +175,7 @@
                                         <i class="fas fa-certificate fa-3x text-success"></i>
                                     </div>
                                     <h6 class="mb-2">File Sertifikat</h6>
-                                    <a href="{{ Storage::url($haki->file_sertifikat) }}" 
+                                    <a href="{{ Storage::url($haki->file_sertifikat) }}"
                                        class="btn btn-outline-success btn-sm" target="_blank">
                                         <i class="fas fa-download mr-1"></i>Download
                                     </a>
@@ -292,19 +292,19 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex gap-2">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}" 
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->fullUrl()) }}"
                                target="_blank" class="btn btn-outline-primary btn-sm">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($haki->judul) }}" 
+                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->fullUrl()) }}&text={{ urlencode($haki->judul) }}"
                                target="_blank" class="btn btn-outline-info btn-sm">
                                 <i class="fab fa-twitter"></i>
                             </a>
-                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}" 
+                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ urlencode(request()->fullUrl()) }}"
                                target="_blank" class="btn btn-outline-primary btn-sm">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" 
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
                                     onclick="copyToClipboard('{{ request()->fullUrl() }}')"
                                     title="Salin link">
                                 <i class="fas fa-copy"></i>
@@ -325,9 +325,13 @@
                         @foreach($relatedHaki as $related)
                         <div class="related-item mb-3 pb-3 {{ !$loop->last ? 'border-bottom' : '' }}">
                             <h6 class="mb-1">
-                                <a href="{{ route('haki.show', $related->slug) }}" class="text-dark text-decoration-none">
+                                @if($related->slug)
+                                    <a href="{{ route('frontend.haki.show', $related->slug) }}" class="text-dark text-decoration-none">
+                                        {{ Str::limit($related->judul, 50) }}
+                                    </a>
+                                @else
                                     {{ Str::limit($related->judul, 50) }}
-                                </a>
+                                @endif
                             </h6>
                             <small class="text-muted d-block mb-1">
                                 <span class="badge badge-sm badge-outline-primary">{{ $related->getJenisHakiLabel() }}</span>
@@ -349,13 +353,13 @@
         <div class="row mt-5">
             <div class="col-12">
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('haki.index') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('frontend.haki') }}" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left mr-1"></i>Kembali ke Daftar HAKI
                     </a>
-                    @if($nextHaki)
-                    <a href="{{ route('haki.show', $nextHaki->slug) }}" class="btn btn-outline-primary">
-                        HAKI Selanjutnya <i class="fas fa-arrow-right ml-1"></i>
-                    </a>
+                    @if($nextHaki && $nextHaki->slug)
+                        <a href="{{ route('frontend.haki.show', $nextHaki->slug) }}" class="btn btn-outline-primary">
+                            HAKI Selanjutnya <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
                     @endif
                 </div>
             </div>
@@ -404,7 +408,7 @@
     .d-flex.gap-2 {
         flex-wrap: wrap;
     }
-    
+
     .d-flex.gap-2 > * {
         margin-right: 0.5rem;
         margin-bottom: 0.5rem;
@@ -423,7 +427,7 @@ function copyToClipboard(text) {
         btn.innerHTML = '<i class="fas fa-check"></i>';
         btn.classList.remove('btn-outline-secondary');
         btn.classList.add('btn-success');
-        
+
         setTimeout(() => {
             btn.innerHTML = originalIcon;
             btn.classList.remove('btn-success');

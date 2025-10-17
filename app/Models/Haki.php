@@ -82,8 +82,8 @@ class Haki extends Model
     protected function inventorNames(): Attribute
     {
         return Attribute::make(
-            get: fn($value, $attributes) => is_array($this->inventor) 
-                ? implode(', ', $this->inventor) 
+            get: fn($value, $attributes) => is_array($this->inventor)
+                ? implode(', ', $this->inventor)
                 : $this->inventor
         );
     }
@@ -96,7 +96,7 @@ class Haki extends Model
         if (!$this->tanggal_berlaku_selesai) {
             return true; // No expiry date set
         }
-        
+
         return $this->tanggal_berlaku_selesai->isFuture();
     }
 
@@ -115,6 +115,24 @@ class Haki extends Model
             'expired' => 'bg-dark',
             default => 'bg-secondary'
         };
+    }
+
+    /**
+     * Get human readable label for jenis_haki
+     */
+    public function getJenisHakiLabel(): string
+    {
+        $options = self::getJenisHakiOptions();
+        return $options[$this->jenis_haki] ?? (string) ($this->jenis_haki ?? '');
+    }
+
+    /**
+     * Get human readable label for status
+     */
+    public function getStatusLabel(): string
+    {
+        $options = self::getStatusOptions();
+        return $options[$this->status] ?? (string) ($this->status ?? '');
     }
 
     /**
