@@ -76,6 +76,123 @@
                                 </div>
                             </div>
 
+                            <!-- Informasi Leader dan Institusi -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card border-warning">
+                                        <div class="card-header bg-warning text-white">
+                                            <h6 class="mb-0">
+                                                <i class="fas fa-user-tie me-2"></i>
+                                                Informasi Leader dan Institusi
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="nidn_leader" class="form-label">NIDN Leader</label>
+                                                    <input type="text" name="nidn_leader" id="nidn_leader"
+                                                           class="form-control @error('nidn_leader') is-invalid @enderror"
+                                                           value="{{ old('nidn_leader') }}" placeholder="Masukkan NIDN leader">
+                                                    @error('nidn_leader')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="leader_name" class="form-label">Nama Leader</label>
+                                                    <input type="text" name="leader_name" id="leader_name"
+                                                           class="form-control @error('leader_name') is-invalid @enderror"
+                                                           value="{{ old('leader_name') }}" placeholder="Masukkan nama leader">
+                                                    @error('leader_name')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="pddikti_code_pt" class="form-label">Kode PT PDDIKTI</label>
+                                                    <input type="text" name="pddikti_code_pt" id="pddikti_code_pt"
+                                                           class="form-control @error('pddikti_code_pt') is-invalid @enderror"
+                                                           value="{{ old('pddikti_code_pt') }}" placeholder="Masukkan kode PT PDDIKTI">
+                                                    @error('pddikti_code_pt')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="institution" class="form-label">Institusi</label>
+                                                    <input type="text" name="institution" id="institution"
+                                                           class="form-control @error('institution') is-invalid @enderror"
+                                                           value="{{ old('institution') }}" placeholder="Masukkan nama institusi">
+                                                    @error('institution')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Informasi Skema -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card border-info">
+                                        <div class="card-header bg-info text-white">
+                                            <h6 class="mb-0">
+                                                <i class="fas fa-project-diagram me-2"></i>
+                                                Informasi Skema
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="skema_abbreviation" class="form-label">Singkatan Skema</label>
+                                                    <input type="text" name="skema_abbreviation" id="skema_abbreviation"
+                                                           class="form-control @error('skema_abbreviation') is-invalid @enderror"
+                                                           value="{{ old('skema_abbreviation') }}" placeholder="Contoh: PDUPT, PD, dll">
+                                                    @error('skema_abbreviation')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="skema_name" class="form-label">Nama Skema</label>
+                                                    <input type="text" name="skema_name" id="skema_name"
+                                                           class="form-control @error('skema_name') is-invalid @enderror"
+                                                           value="{{ old('skema_name') }}" placeholder="Nama lengkap skema">
+                                                    @error('skema_name')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="first_proposal_year" class="form-label">Tahun Pertama Proposal</label>
+                                                    <input type="number" name="first_proposal_year" id="first_proposal_year"
+                                                           class="form-control @error('first_proposal_year') is-invalid @enderror"
+                                                           value="{{ old('first_proposal_year') }}" min="2000" max="{{ date('Y') + 10 }}">
+                                                    @error('first_proposal_year')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="proposed_year_of_activities" class="form-label">Tahun Kegiatan yang Diusulkan</label>
+                                                    <input type="number" name="proposed_year_of_activities" id="proposed_year_of_activities"
+                                                           class="form-control @error('proposed_year_of_activities') is-invalid @enderror"
+                                                           value="{{ old('proposed_year_of_activities') }}" min="2000" max="{{ date('Y') + 10 }}">
+                                                    @error('proposed_year_of_activities')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="year_of_activity" class="form-label">Tahun Kegiatan</label>
+                                                    <input type="number" name="year_of_activity" id="year_of_activity"
+                                                           class="form-control @error('year_of_activity') is-invalid @enderror"
+                                                           value="{{ old('year_of_activity') }}" min="2000" max="{{ date('Y') + 10 }}">
+                                                    @error('year_of_activity')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Status dan Kategori -->
                             <div class="row mb-4">
                                 <div class="col-12">
@@ -160,14 +277,82 @@
                                 </div>
                             </div>
 
-                            <!-- Pendanaan -->
+                            <!-- Informasi Proposal -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card border-dark">
+                                        <div class="card-header bg-dark text-white">
+                                            <h6 class="mb-0">
+                                                <i class="fas fa-file-contract me-2"></i>
+                                                Informasi Proposal
+                                            </h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="proposal_status" class="form-label">Status Proposal</label>
+                                                    <select name="proposal_status" id="proposal_status" class="form-select @error('proposal_status') is-invalid @enderror">
+                                                        <option value="">-- Pilih Status Proposal --</option>
+                                                        @foreach(\App\Models\Research::getProposalStatusOptions() as $value => $label)
+                                                            <option value="{{ $value }}" {{ old('proposal_status', 'draft') == $value ? 'selected' : '' }}>
+                                                                {{ $label }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('proposal_status')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="duration_of_activity" class="form-label">Durasi Kegiatan (tahun)</label>
+                                                    <input type="number" name="duration_of_activity" id="duration_of_activity"
+                                                           class="form-control @error('duration_of_activity') is-invalid @enderror"
+                                                           value="{{ old('duration_of_activity') }}" min="1" max="10">
+                                                    @error('duration_of_activity')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="target_tkt_level" class="form-label">Target TKT Level</label>
+                                                    <input type="number" name="target_tkt_level" id="target_tkt_level"
+                                                           class="form-control @error('target_tkt_level') is-invalid @enderror"
+                                                           value="{{ old('target_tkt_level') }}" min="1" max="9">
+                                                    @error('target_tkt_level')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="hibah_program" class="form-label">Program Hibah</label>
+                                                    <input type="text" name="hibah_program" id="hibah_program"
+                                                           class="form-control @error('hibah_program') is-invalid @enderror"
+                                                           value="{{ old('hibah_program') }}" placeholder="Contoh: PDUPT, PD, dll">
+                                                    @error('hibah_program')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="focus_area" class="form-label">Area Fokus</label>
+                                                    <input type="text" name="focus_area" id="focus_area"
+                                                           class="form-control @error('focus_area') is-invalid @enderror"
+                                                           value="{{ old('focus_area') }}" placeholder="Area fokus penelitian">
+                                                    @error('focus_area')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pendanaan Tambahan -->
                             <div class="row mb-4">
                                 <div class="col-12">
                                     <div class="card border-success">
                                         <div class="card-header bg-success text-white">
                                             <h6 class="mb-0">
                                                 <i class="fas fa-money-bill-wave me-2"></i>
-                                                Pendanaan
+                                                Pendanaan dan Sumber Dana
                                             </h6>
                                         </div>
                                         <div class="card-body">
@@ -188,6 +373,61 @@
                                                            value="{{ old('jumlah_dana') }}" min="0" step="1000"
                                                            placeholder="Masukkan jumlah dana dalam Rupiah">
                                                     @error('jumlah_dana')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="funds_approved" class="form-label">Dana yang Disetujui (Rp)</label>
+                                                    <input type="number" name="funds_approved" id="funds_approved"
+                                                           class="form-control @error('funds_approved') is-invalid @enderror"
+                                                           value="{{ old('funds_approved') }}" min="0" step="1000"
+                                                           placeholder="Dana yang disetujui">
+                                                    @error('funds_approved')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="funds_institution" class="form-label">Institusi Pemberi Dana</label>
+                                                    <input type="text" name="funds_institution" id="funds_institution"
+                                                           class="form-control @error('funds_institution') is-invalid @enderror"
+                                                           value="{{ old('funds_institution') }}" placeholder="Institusi pemberi dana">
+                                                    @error('funds_institution')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="sinta_affiliation_id" class="form-label">SINTA Afiliasi ID</label>
+                                                    <input type="text" name="sinta_affiliation_id" id="sinta_affiliation_id"
+                                                           class="form-control @error('sinta_affiliation_id') is-invalid @enderror"
+                                                           value="{{ old('sinta_affiliation_id') }}" placeholder="ID afiliasi SINTA">
+                                                    @error('sinta_affiliation_id')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="fund_source_category" class="form-label">Kategori Sumber Dana</label>
+                                                    <input type="text" name="fund_source_category" id="fund_source_category"
+                                                           class="form-control @error('fund_source_category') is-invalid @enderror"
+                                                           value="{{ old('fund_source_category') }}" placeholder="Kategori sumber dana">
+                                                    @error('fund_source_category')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="fund_source" class="form-label">Sumber Dana</label>
+                                                    <input type="text" name="fund_source" id="fund_source"
+                                                           class="form-control @error('fund_source') is-invalid @enderror"
+                                                           value="{{ old('fund_source') }}" placeholder="Sumber dana spesifik">
+                                                    @error('fund_source')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="country_fund_source" class="form-label">Negara Sumber Dana</label>
+                                                    <input type="text" name="country_fund_source" id="country_fund_source"
+                                                           class="form-control @error('country_fund_source') is-invalid @enderror"
+                                                           value="{{ old('country_fund_source', 'Indonesia') }}" placeholder="Negara sumber dana">
+                                                    @error('country_fund_source')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>

@@ -145,13 +145,15 @@
                         <thead class="table-dark">
                             <tr>
                                 <th width="5%" class="text-center">#</th>
-                                <th width="25%">Judul Pengabdian</th>
-                                <th width="15%">Penanggung Jawab</th>
-                                <th width="12%">Jenis</th>
-                                <th width="15%">Lokasi</th>
+                                <th width="20%">Judul Pengabdian</th>
+                                <th width="12%">Penanggung Jawab</th>
+                                <th width="10%">Skema</th>
+                                <th width="10%">Jenis</th>
+                                <th width="12%">Lokasi</th>
                                 <th width="8%" class="text-center">Tahun</th>
-                                <th width="10%">Status</th>
-                                <th width="10%" class="text-center">Aksi</th>
+                                <th width="8%">Status</th>
+                                <th width="10%">Dana</th>
+                                <th width="5%" class="text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,7 +163,7 @@
                                 <td>
                                     <div class="d-flex align-items-start">
                                         <div class="flex-grow-1">
-                                            <strong class="text-dark">{{ Str::limit($service->judul, 50) }}</strong>
+                                            <strong class="text-dark">{{ Str::limit($service->judul, 40) }}</strong>
                                             @if($service->tanggal_mulai && $service->tanggal_selesai)
                                             <br>
                                             <small class="text-muted">
@@ -186,12 +188,25 @@
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="coordinator-avatar-sm me-2">
-                                            {{ strtoupper(substr($service->dosen?->nama_lengkap ?? 'N', 0, 2)) }}
+                                            {{ strtoupper(substr($service->leader_name ?? $service->dosen?->nama_lengkap ?? 'N', 0, 2)) }}
                                         </div>
                                         <div>
-                                            <div class="fw-bold">{{ $service->dosen?->nama_lengkap ?? 'N/A' }}</div>
+                                            <div class="fw-bold">{{ $service->leader_name ?? $service->dosen?->nama_lengkap ?? 'N/A' }}</div>
+                                            @if($service->nidn_leader)
+                                            <small class="text-muted">NIDN: {{ $service->nidn_leader }}</small>
+                                            @endif
                                         </div>
                                     </div>
+                                </td>
+                                <td>
+                                    @if($service->skema_name)
+                                        <small>{{ Str::limit($service->skema_name, 25) }}</small>
+                                        @if($service->skema_abbreviation)
+                                        <br><small class="text-muted">({{ $service->skema_abbreviation }})</small>
+                                        @endif
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
                                 </td>
                                 <td>
                                     @if($service->jenis_pengabdian)
@@ -202,7 +217,7 @@
                                 </td>
                                 <td>
                                     @if($service->lokasi)
-                                        <small>{{ Str::limit($service->lokasi, 30) }}</small>
+                                        <small>{{ Str::limit($service->lokasi, 25) }}</small>
                                     @else
                                         <span class="text-muted">-</span>
                                     @endif
@@ -219,6 +234,15 @@
                                         <span class="text-muted">-</span>
                                     @endif
                                 </td>
+                                <td>
+                                    @if($service->fund_approved)
+                                        <small>Rp {{ number_format($service->fund_approved / 1000, 0, ',', '.') }}K</small>
+                                    @elseif($service->jumlah_dana)
+                                        <small>Rp {{ number_format($service->jumlah_dana / 1000, 0, ',', '.') }}K</small>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
+                                </td>
                                 <td class="text-center">
                                     <a href="{{ route('frontend.services.show', $service->id) }}"
                                        class="btn btn-success btn-sm"
@@ -229,7 +253,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="8" class="text-center py-5">
+                                <td colspan="10" class="text-center py-5">
                                     <div class="empty-state">
                                         <div class="empty-icon">
                                             <i class="fas fa-hands-helping"></i>

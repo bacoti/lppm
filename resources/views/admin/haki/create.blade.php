@@ -105,6 +105,17 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="pemegang_paten" class="form-label fw-bold">Pemegang Paten</label>
+                            <input type="text" name="pemegang_paten" id="pemegang_paten"
+                                   class="form-control @error('pemegang_paten') is-invalid @enderror"
+                                   value="{{ old('pemegang_paten') }}"
+                                   placeholder="Masukkan nama pemegang paten">
+                            @error('pemegang_paten')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -193,7 +204,41 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="nomor_permohonan" class="form-label fw-bold">Nomor Permohonan</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                                        </div>
+                                        <input type="text" name="nomor_permohonan" id="nomor_permohonan"
+                                               class="form-control @error('nomor_permohonan') is-invalid @enderror"
+                                               value="{{ old('nomor_permohonan') }}"
+                                               placeholder="Contoh: P00202100123">
+                                    </div>
+                                    @error('nomor_permohonan')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="tahun_permohonan" class="form-label fw-bold">Tahun Permohonan</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="number" name="tahun_permohonan" id="tahun_permohonan"
+                                               class="form-control @error('tahun_permohonan') is-invalid @enderror"
+                                               value="{{ old('tahun_permohonan') }}"
+                                               placeholder="2024" min="2000" max="{{ date('Y') + 1 }}">
+                                    </div>
+                                    @error('tahun_permohonan')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
                                     <label for="nomor_pendaftaran" class="form-label fw-bold">Nomor Pendaftaran</label>
                                     <div class="input-group">
@@ -210,7 +255,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-6">
+                            <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
                                     <label for="nomor_publikasi" class="form-label fw-bold">Nomor Publikasi</label>
                                     <div class="input-group">
@@ -223,23 +268,6 @@
                                                placeholder="Contoh: ID0000012345">
                                     </div>
                                     @error('nomor_publikasi')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <div class="form-group">
-                                    <label for="nomor_sertifikat" class="form-label fw-bold">Nomor Sertifikat</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-certificate"></i></span>
-                                        </div>
-                                        <input type="text" name="nomor_sertifikat" id="nomor_sertifikat"
-                                               class="form-control @error('nomor_sertifikat') is-invalid @enderror"
-                                               value="{{ old('nomor_sertifikat') }}"
-                                               placeholder="Nomor sertifikat">
-                                    </div>
-                                    @error('nomor_sertifikat')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -281,16 +309,16 @@
                             </div>
                             <div class="col-lg-3 col-md-6">
                                 <div class="form-group">
-                                    <label for="tanggal_granted" class="form-label fw-bold">Tanggal Granted</label>
+                                    <label for="tanggal_penerimaan" class="form-label fw-bold">Tanggal Penerimaan</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                            <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
                                         </div>
-                                        <input type="date" name="tanggal_granted" id="tanggal_granted"
-                                               class="form-control @error('tanggal_granted') is-invalid @enderror"
-                                               value="{{ old('tanggal_granted') }}">
+                                        <input type="date" name="tanggal_penerimaan" id="tanggal_penerimaan"
+                                               class="form-control @error('tanggal_penerimaan') is-invalid @enderror"
+                                               value="{{ old('tanggal_penerimaan') }}">
                                     </div>
-                                    @error('tanggal_granted')
+                                    @error('tanggal_penerimaan')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

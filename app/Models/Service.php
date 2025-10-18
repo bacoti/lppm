@@ -19,8 +19,21 @@ class Service extends Model
         'deskripsi',
         'bidang',
         'jenis_pengabdian',
+        // Leader Information
+        'nidn_leader',
+        'leader_name',
+        'pddikti_code_pt',
+        'institution',
+        // Skema Information
+        'skema_abbreviation',
+        'skema_name',
+        // Timeline Information
+        'first_year_proposal',
+        'proposed_year_activities',
+        'activity_year',
         // Status dan Progress
         'status',
+        'proposal_status',
         'progress_percentage',
         // Tim Pelaksana
         'ketua_pengabdian',
@@ -41,7 +54,17 @@ class Service extends Model
         // Pendanaan
         'sumber_dana',
         'jumlah_dana',
+        'fund_approved',
+        'funds_institution',
+        'fund_source_category',
+        'fund_source',
+        'country_fund_source',
         'hibah_kompetitif',
+        'hibah_program',
+        // Additional Information
+        'sinta_affiliation_id',
+        'target_tkt',
+        'focus_area',
         // Output dan Dampak
         'tujuan',
         'luaran',
@@ -75,6 +98,11 @@ class Service extends Model
         'jumlah_peserta' => 'integer',
         'durasi_hari' => 'integer',
         'jumlah_dana' => 'decimal:2',
+        'fund_approved' => 'decimal:2',
+        'first_year_proposal' => 'integer',
+        'proposed_year_activities' => 'integer',
+        'activity_year' => 'integer',
+        'target_tkt' => 'integer',
     ];
 
     /**
@@ -89,8 +117,24 @@ class Service extends Model
             'bidang' => 'nullable|string|max:255',
             'jenis_pengabdian' => 'nullable|in:pengabdian_masyarakat,pengembangan_masyarakat,pemberdayaan_masyarakat,kemitraan,lainnya',
 
+            // Leader Information
+            'nidn_leader' => 'nullable|string|max:50',
+            'leader_name' => 'nullable|string|max:255',
+            'pddikti_code_pt' => 'nullable|string|max:50',
+            'institution' => 'nullable|string|max:255',
+
+            // Skema Information
+            'skema_abbreviation' => 'nullable|string|max:50',
+            'skema_name' => 'nullable|string|max:255',
+
+            // Timeline Information
+            'first_year_proposal' => 'nullable|integer|min:2000|max:' . (date('Y') + 10),
+            'proposed_year_activities' => 'nullable|integer|min:2000|max:' . (date('Y') + 10),
+            'activity_year' => 'nullable|integer|min:2000|max:' . (date('Y') + 10),
+
             // Status dan Progress
             'status' => 'required|in:draft,submitted,approved,ongoing,completed,reported,cancelled',
+            'proposal_status' => 'nullable|in:draft,submitted,review,approved,rejected,funded',
             'progress_percentage' => 'nullable|integer|min:0|max:100',
 
             // Tim Pelaksana
@@ -116,7 +160,18 @@ class Service extends Model
             // Pendanaan
             'sumber_dana' => 'nullable|string|max:255',
             'jumlah_dana' => 'nullable|numeric|min:0|max:999999999999.99',
+            'fund_approved' => 'nullable|numeric|min:0|max:999999999999.99',
+            'funds_institution' => 'nullable|string|max:255',
+            'fund_source_category' => 'nullable|string|max:255',
+            'fund_source' => 'nullable|string|max:255',
+            'country_fund_source' => 'nullable|string|max:255',
             'hibah_kompetitif' => 'nullable|boolean',
+            'hibah_program' => 'nullable|string|max:255',
+
+            // Additional Information
+            'sinta_affiliation_id' => 'nullable|string|max:50',
+            'target_tkt' => 'nullable|integer|min:1|max:9',
+            'focus_area' => 'nullable|string|max:500',
 
             // Output dan Dampak
             'tujuan' => 'nullable|string|max:1000',
@@ -177,6 +232,21 @@ class Service extends Model
     }
 
     /**
+     * Get proposal status options
+     */
+    public static function getProposalStatusOptions(): array
+    {
+        return [
+            'draft' => 'Draft',
+            'submitted' => 'Diajukan',
+            'review' => 'Dalam Review',
+            'approved' => 'Disetujui',
+            'rejected' => 'Ditolak',
+            'funded' => 'Didanai',
+        ];
+    }
+
+    /**
      * Get tingkat kepuasan options
      */
     public static function getTingkatKepuasanOptions(): array
@@ -191,6 +261,22 @@ class Service extends Model
     }
 
     /**
+     * Get proposal status badge class
+     */
+    public function getProposalStatusBadgeClass(): string
+    {
+        return match($this->proposal_status) {
+            'draft' => 'secondary',
+            'submitted' => 'info',
+            'review' => 'warning',
+            'approved' => 'primary',
+            'rejected' => 'danger',
+            'funded' => 'success',
+            default => 'secondary',
+        };
+    }
+
+    /**
      * Get status badge class
      */
     public function getStatusBadgeClass(): string
@@ -201,7 +287,7 @@ class Service extends Model
             'approved' => 'primary',
             'ongoing' => 'warning',
             'completed' => 'success',
-            'reported' => 'success',
+            'reported' => 'info',
             'cancelled' => 'danger',
             default => 'secondary',
         };
@@ -229,6 +315,14 @@ class Service extends Model
     public function getFormattedJumlahDana(): string
     {
         return $this->jumlah_dana ? 'Rp ' . number_format($this->jumlah_dana, 0, ',', '.') : '-';
+    }
+
+    /**
+     * Get formatted fund approved
+     */
+    public function getFormattedFundApproved(): string
+    {
+        return $this->fund_approved ? 'Rp ' . number_format($this->fund_approved, 0, ',', '.') : '-';
     }
 
     /**

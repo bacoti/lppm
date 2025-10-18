@@ -72,16 +72,30 @@
                                 </select>
                             </div>
 
-                            <!-- Buttons -->
-                            <div class="col-12">
-                                <div class="d-flex gap-2">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-search me-1"></i>Filter
-                                    </button>
-                                    <a href="{{ route('admin.researches.index') }}" class="btn btn-outline-secondary">
-                                        <i class="fas fa-times me-1"></i>Reset
-                                    </a>
-                                </div>
+                            <!-- Proposal Status Filter -->
+                            <div class="col-md-2">
+                                <label for="proposal_status" class="form-label">Status Proposal</label>
+                                <select name="proposal_status" id="proposal_status" class="form-select">
+                                    <option value="all">Semua Status</option>
+                                    @foreach(\App\Models\Research::getProposalStatusOptions() as $value => $label)
+                                        <option value="{{ $value }}" {{ request('proposal_status') == $value ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Year Filter -->
+                            <div class="col-md-2">
+                                <label for="tahun" class="form-label">Tahun</label>
+                                <select name="tahun" id="tahun" class="form-select">
+                                    <option value="all">Semua Tahun</option>
+                                    @foreach($years as $year)
+                                        <option value="{{ $year }}" {{ request('tahun') == $year ? 'selected' : '' }}>
+                                            {{ $year }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </form>
                     </div>
@@ -119,6 +133,31 @@
                                                            ($research->getStatusBadgeClass() === 'success' ? 'Selesai' : 'Dibatalkan'))) }}
                                                     </span>
                                                 </div>
+                                                @if($research->nidn_leader)
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-id-card me-1"></i>
+                                                        NIDN: {{ $research->nidn_leader }}
+                                                    </div>
+                                                @endif
+                                                @if($research->skema_abbreviation)
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-project-diagram me-1"></i>
+                                                        {{ $research->skema_abbreviation }}
+                                                    </div>
+                                                @endif
+                                                @if($research->proposal_status)
+                                                    <div class="col-auto">
+                                                        <span class="badge bg-{{ $research->getProposalStatusBadgeClass() }}">
+                                                            Proposal: {{ \App\Models\Research::getProposalStatusOptions()[$research->proposal_status] ?? $research->proposal_status }}
+                                                        </span>
+                                                    </div>
+                                                @endif
+                                                @if($research->funds_approved)
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-money-bill-wave me-1"></i>
+                                                        {{ $research->getFormattedFundsApproved() }}
+                                                    </div>
+                                                @endif
                                             </div>
                                             @if($research->abstrak)
                                                 <p class="card-text mt-2 text-muted small">

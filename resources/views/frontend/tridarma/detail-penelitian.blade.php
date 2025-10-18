@@ -71,6 +71,16 @@
                                     <i class="fas fa-crown me-1"></i>Ketua Peneliti: <strong>{{ $research->ketua_peneliti }}</strong>
                                 </p>
                             @endif
+                            @if($research->nidn_leader)
+                                <p class="researcher-role-info">
+                                    <i class="fas fa-id-card me-1"></i>NIDN Ketua: <strong>{{ $research->nidn_leader }}</strong>
+                                </p>
+                            @endif
+                            @if($research->leader_name && $research->leader_name !== $research->ketua_peneliti)
+                                <p class="researcher-role-info">
+                                    <i class="fas fa-user-tie me-1"></i>Nama Ketua: <strong>{{ $research->leader_name }}</strong>
+                                </p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -195,6 +205,41 @@
                     </div>
                     @endif
 
+                    @if($research->skema_name || $research->skema_abbreviation)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>Skema</span>
+                        </div>
+                        <div class="info-value">
+                            {{ $research->skema_name ?: $research->skema_abbreviation }}
+                            @if($research->skema_name && $research->skema_abbreviation)
+                                <br><small class="text-muted">({{ $research->skema_abbreviation }})</small>
+                            @endif
+                        </div>
+                    </div>
+                    @endif
+
+                    @if($research->pddikti_code_pt)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-university"></i>
+                            <span>Kode PDDIKTI PT</span>
+                        </div>
+                        <div class="info-value">{{ $research->pddikti_code_pt }}</div>
+                    </div>
+                    @endif
+
+                    @if($research->institution)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-building"></i>
+                            <span>Institusi</span>
+                        </div>
+                        <div class="info-value">{{ $research->institution }}</div>
+                    </div>
+                    @endif
+
                     @if($research->tingkat)
                     <div class="info-row">
                         <div class="info-label">
@@ -202,6 +247,30 @@
                             <span>Tingkat</span>
                         </div>
                         <div class="info-value">{{ ucfirst($research->tingkat) }}</div>
+                    </div>
+                    @endif
+
+                    @if($research->proposal_status)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Status Proposal</span>
+                        </div>
+                        <div class="info-value">
+                            @php
+                                $statusOptions = \App\Models\Research::getProposalStatusOptions();
+                                $statusLabel = $statusOptions[$research->proposal_status] ?? $research->proposal_status;
+                            @endphp
+                            <span class="badge {{ match($research->proposal_status) {
+                                'draft' => 'bg-secondary',
+                                'submitted' => 'bg-warning',
+                                'review' => 'bg-info',
+                                'approved' => 'bg-success',
+                                'rejected' => 'bg-danger',
+                                'funded' => 'bg-primary',
+                                default => 'bg-secondary'
+                            } }}">{{ $statusLabel }}</span>
+                        </div>
                     </div>
                     @endif
 
@@ -215,13 +284,13 @@
                     </div>
                     @endif
 
-                    @if($research->jumlah_dana)
+                    @if($research->funds_approved)
                     <div class="info-row">
                         <div class="info-label">
                             <i class="fas fa-coins"></i>
-                            <span>Jumlah Dana</span>
+                            <span>Dana Disetujui</span>
                         </div>
-                        <div class="info-value">Rp {{ number_format($research->jumlah_dana, 0, ',', '.') }}</div>
+                        <div class="info-value">Rp {{ number_format($research->funds_approved, 0, ',', '.') }}</div>
                     </div>
                     @endif
 

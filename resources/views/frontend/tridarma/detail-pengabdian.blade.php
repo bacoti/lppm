@@ -68,9 +68,19 @@
                             @if($service->dosen?->nidn_nip)
                                 <p class="coordinator-id">NIDN/NIP: {{ $service->dosen->nidn_nip }}</p>
                             @endif
-                            @if($service->penanggung_jawab && $service->penanggung_jawab !== $service->dosen?->nama_lengkap)
+                            @if($service->ketua_pengabdian && $service->ketua_pengabdian !== $service->dosen?->nama_lengkap)
                                 <p class="coordinator-role-info">
-                                    <i class="fas fa-user-check me-1"></i>{{ $service->penanggung_jawab }}
+                                    <i class="fas fa-crown me-1"></i>Ketua Pengabdian: <strong>{{ $service->ketua_pengabdian }}</strong>
+                                </p>
+                            @endif
+                            @if($service->nidn_leader)
+                                <p class="coordinator-role-info">
+                                    <i class="fas fa-id-card me-1"></i>NIDN Ketua: <strong>{{ $service->nidn_leader }}</strong>
+                                </p>
+                            @endif
+                            @if($service->leader_name && $service->leader_name !== $service->ketua_pengabdian)
+                                <p class="coordinator-role-info">
+                                    <i class="fas fa-user-tie me-1"></i>Nama Ketua: <strong>{{ $service->leader_name }}</strong>
                                 </p>
                             @endif
                         </div>
@@ -254,6 +264,60 @@
                     </div>
                     @endif
 
+                    @if($service->skema_name)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-project-diagram"></i>
+                            <span>Skema</span>
+                        </div>
+                        <div class="info-value">{{ $service->skema_name }}</div>
+                    </div>
+                    @endif
+
+                    @if($service->pddikti_code_pt)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-university"></i>
+                            <span>Kode PDDIKTI PT</span>
+                        </div>
+                        <div class="info-value">{{ $service->pddikti_code_pt }}</div>
+                    </div>
+                    @endif
+
+                    @if($service->institution)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-building"></i>
+                            <span>Institusi</span>
+                        </div>
+                        <div class="info-value">{{ $service->institution }}</div>
+                    </div>
+                    @endif
+
+                    @if($service->proposal_status)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-file-contract"></i>
+                            <span>Status Proposal</span>
+                        </div>
+                        <div class="info-value">
+                            @php
+                                $statusOptions = \App\Models\Service::getProposalStatusOptions();
+                                $statusLabel = $statusOptions[$service->proposal_status] ?? $service->proposal_status;
+                            @endphp
+                            <span class="badge {{ match($service->proposal_status) {
+                                'draft' => 'bg-secondary',
+                                'submitted' => 'bg-info',
+                                'review' => 'bg-warning',
+                                'approved' => 'bg-primary',
+                                'rejected' => 'bg-danger',
+                                'funded' => 'bg-success',
+                                default => 'bg-secondary'
+                            } }}">{{ $statusLabel }}</span>
+                        </div>
+                    </div>
+                    @endif
+
                     @if($service->sumber_dana)
                     <div class="info-row">
                         <div class="info-label">
@@ -264,7 +328,15 @@
                     </div>
                     @endif
 
-                    @if($service->jumlah_dana)
+                    @if($service->fund_approved)
+                    <div class="info-row">
+                        <div class="info-label">
+                            <i class="fas fa-coins"></i>
+                            <span>Dana Disetujui</span>
+                        </div>
+                        <div class="info-value">Rp {{ number_format($service->fund_approved, 0, ',', '.') }}</div>
+                    </div>
+                    @elseif($service->jumlah_dana)
                     <div class="info-row">
                         <div class="info-label">
                             <i class="fas fa-coins"></i>
@@ -294,13 +366,13 @@
                     </div>
                     @endif
 
-                    @if($service->durasi_kegiatan)
+                    @if($service->durasi_hari)
                     <div class="info-row">
                         <div class="info-label">
                             <i class="fas fa-hourglass-half"></i>
                             <span>Durasi</span>
                         </div>
-                        <div class="info-value">{{ $service->durasi_kegiatan }}</div>
+                        <div class="info-value">{{ $service->durasi_hari }} hari</div>
                     </div>
                     @endif
                 </div>

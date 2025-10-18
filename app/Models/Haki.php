@@ -15,13 +15,17 @@ class Haki extends Model
         'judul',
         'slug',
         'jenis_haki',
+        'nomor_permohonan',
+        'tahun_permohonan',
         'nomor_pendaftaran',
         'nomor_publikasi',
         'tanggal_daftar',
         'tanggal_publikasi',
+        'tanggal_penerimaan',
         'tanggal_granted',
         'status',
         'deskripsi',
+        'pemegang_paten',
         'inventor',
         'klasifikasi',
         'bidang_teknologi',
@@ -39,11 +43,21 @@ class Haki extends Model
         'inventor' => 'array',
         'tanggal_daftar' => 'date',
         'tanggal_publikasi' => 'date',
+        'tanggal_penerimaan' => 'date',
         'tanggal_granted' => 'date',
         'tanggal_berlaku_mulai' => 'date',
         'tanggal_berlaku_selesai' => 'date',
+        'tahun_permohonan' => 'integer',
         'diperpanjang' => 'boolean'
     ];
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     /**
      * Get HAKI type options

@@ -87,6 +87,51 @@ class ResearchFactory extends Factory
             'file_proposal' => null,
             'file_progress_report' => null,
             'file_final_report' => null,
+
+            // Additional research fields
+            'nidn_leader' => $this->faker->optional(0.9)->numerify('##########'), // 90% chance has NIDN
+            'leader_name' => $this->faker->name(),
+            'pddikti_code_pt' => $this->faker->optional(0.8)->numerify('###'), // 80% chance has PDDIKTI code
+            'institution' => $this->faker->company(),
+            'skema_abbreviation' => $this->faker->randomElement(['PDUPT', 'PD', 'PKM', 'P3MI', 'RKAT', 'RKPD']),
+            'skema_name' => $this->faker->randomElement([
+                'Penelitian Dosen Pemula Unggulan Perguruan Tinggi',
+                'Penelitian Disertasi Doktor',
+                'Pengabdian kepada Masyarakat',
+                'Program Pengembangan Media dan Informasi',
+                'Rencana Kerja dan Anggaran Tahunan',
+                'Rencana Kerja dan Pengembangan'
+            ]),
+            'first_proposal_year' => $this->faker->numberBetween(2018, 2024),
+            'proposed_year_of_activities' => $this->faker->numberBetween(2020, 2025),
+            'year_of_activity' => $this->faker->numberBetween(2020, 2025),
+            'duration_of_activity' => $this->faker->numberBetween(1, 4),
+            'proposal_status' => $this->faker->randomElement([
+                'draft', 'submitted', 'approved', 'rejected', 'revision', 'funded', 'completed'
+            ]),
+            'funds_approved' => $this->faker->optional(0.7)->randomFloat(2, 1_000_000, 50_000_000), // 70% chance has approved funds
+            'sinta_affiliation_id' => $this->faker->optional(0.6)->numerify('###'), // 60% chance has SINTA ID
+            'funds_institution' => $this->faker->optional(0.8)->company(), // 80% chance has funding institution
+            'target_tkt_level' => $this->faker->numberBetween(1, 9),
+            'hibah_program' => $this->faker->randomElement([
+                'Penelitian Dasar', 'Penelitian Terapan', 'Pengembangan Teknologi',
+                'Penelitian Kerjasama', 'Penelitian Mandiri'
+            ]),
+            'focus_area' => $this->faker->randomElement([
+                'Teknologi Informasi', 'Kesehatan', 'Pendidikan', 'Lingkungan',
+                'Ekonomi', 'Sosial', 'Budaya', 'Pertanian', 'Energi'
+            ]),
+            'fund_source_category' => $this->faker->randomElement([
+                'Pemerintah', 'Swasta', 'Internasional', 'Mandiri', 'Kerjasama'
+            ]),
+            'fund_source' => $this->faker->randomElement([
+                'DIKTI', 'Kemenristekdikti', 'LPDP', 'Bank Mandiri', 'BRI', 'BNI',
+                'World Bank', 'ADB', 'Ford Foundation', 'Dana Internal'
+            ]),
+            'country_fund_source' => $this->faker->randomElement([
+                'Indonesia', 'Amerika Serikat', 'Jepang', 'Jerman', 'Australia',
+                'Belanda', 'Korea Selatan', 'Singapura', 'Malaysia'
+            ]),
         ];
     }
 }

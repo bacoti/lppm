@@ -86,7 +86,7 @@
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="d-flex flex-column">
                             <span class="fw-semibold text-bg small">Email</span>
-                            <span class="fs-6 text-muted">Not implemented yet</span>
+                            <span class="fs-6 text-muted">{{ $dosen->email ?? '-' }}</span>
                         </div>
                     </div>
 
@@ -142,7 +142,7 @@
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="d-flex flex-column">
                             <span class="fw-semibold text-bg small">Jabatan Fungsional</span>
-                            <span class="fs-6 text-muted">Not implemented yet</span>
+                            <span class="fs-6 text-muted">{{ $dosen->academic_grade ?? '-' }}</span>
                         </div>
                     </div>
 
@@ -166,7 +166,7 @@
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="d-flex flex-column">
                             <span class="fw-semibold text-bg small">Prodi Homebase</span>
-                            <span class="fs-6 text-muted">Not implemented yet</span>
+                            <span class="fs-6 text-muted">{{ $dosen->department ?? '-' }}</span>
                         </div>
                     </div>
 
@@ -206,7 +206,7 @@
                     <div class="col-12 col-md-6 col-lg-3">
                         <div class="d-flex flex-column">
                             <span class="fw-semibold text-bg small">Nomor KTP / KK</span>
-                            <span class="fs-6 text-muted">Not implemented yet</span>
+                            <span class="fs-6 text-muted">{{ $dosen->id_card ?? '-' }}</span>
                         </div>
                     </div>
 

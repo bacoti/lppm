@@ -50,6 +50,11 @@ class ResearchController extends Controller
             $query->where('kategori', $request->kategori);
         }
 
+        // Filter by proposal status
+        if ($request->filled('proposal_status') && $request->proposal_status !== 'all') {
+            $query->where('proposal_status', $request->proposal_status);
+        }
+
         // Filter by tingkat
         if ($request->filled('tingkat') && $request->tingkat !== 'all') {
             $query->where('tingkat', $request->tingkat);
@@ -127,7 +132,8 @@ class ResearchController extends Controller
      */
     public function edit(Research $research)
     {
-        return view('admin.researches.edit', compact('research'));
+        $dosens = Dosen::all();
+        return view('admin.researches.edit', compact('research', 'dosens'));
     }
 
     /**
@@ -218,12 +224,23 @@ class ResearchController extends Controller
     {
         $search = $request->query('q');
         $tahun  = $request->query('tahun');
+        $proposal_status = $request->query('proposal_status');
 
         $query = Research::with('dosen')->latest();
 
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('ketua_peneliti', 'like', "%{$search}%")
+                    ->orWhere('nidn_leader', 'like', "%{$search}%")
+                    ->orWhere('leader_name', 'like', "%{$search}%")
+                    ->orWhere('institution', 'like', "%{$search}%")
+                    ->orWhere('skema', 'like', "%{$search}%")
+                    ->orWhere('bidang', 'like', "%{$search}%")
+                    ->orWhere('sumber_dana', 'like', "%{$search}%")
+                    ->orWhere('luaran', 'like', "%{$search}%")
+                    ->orWhere('keywords', 'like', "%{$search}%")
+                    ->orWhere('jurnal_conference', 'like', "%{$search}%")
                     ->orWhereHas('dosen', function ($q2) use ($search) {
                         $q2->where('nama_lengkap', 'like', "%{$search}%")
                             ->orWhere('nidn_nip', 'like', "%{$search}%");
@@ -233,6 +250,10 @@ class ResearchController extends Controller
 
         if ($tahun) {
             $query->where('tahun', $tahun);
+        }
+
+        if ($proposal_status) {
+            $query->where('proposal_status', $proposal_status);
         }
 
         $researches = $query->paginate(9)->withQueryString();

@@ -91,6 +91,16 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="pemegang_paten">Pemegang Paten</label>
+                            <input type="text" name="pemegang_paten" id="pemegang_paten"
+                                   class="form-control @error('pemegang_paten') is-invalid @enderror"
+                                   value="{{ old('pemegang_paten', $haki->pemegang_paten) }}">
+                            @error('pemegang_paten')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -182,35 +192,47 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="nomor_permohonan">Nomor Permohonan</label>
+                                    <input type="text" name="nomor_permohonan" id="nomor_permohonan"
+                                           class="form-control @error('nomor_permohonan') is-invalid @enderror"
+                                           value="{{ old('nomor_permohonan', $haki->nomor_permohonan) }}">
+                                    @error('nomor_permohonan')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="tahun_permohonan">Tahun Permohonan</label>
+                                    <input type="number" name="tahun_permohonan" id="tahun_permohonan"
+                                           class="form-control @error('tahun_permohonan') is-invalid @enderror"
+                                           value="{{ old('tahun_permohonan', $haki->tahun_permohonan) }}"
+                                           min="2000" max="{{ date('Y') + 1 }}">
+                                    @error('tahun_permohonan')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="nomor_pendaftaran">Nomor Pendaftaran</label>
-                                    <input type="text" name="nomor_pendaftaran" id="nomor_pendaftaran" 
-                                           class="form-control @error('nomor_pendaftaran') is-invalid @enderror" 
+                                    <input type="text" name="nomor_pendaftaran" id="nomor_pendaftaran"
+                                           class="form-control @error('nomor_pendaftaran') is-invalid @enderror"
                                            value="{{ old('nomor_pendaftaran', $haki->nomor_pendaftaran) }}">
                                     @error('nomor_pendaftaran')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="nomor_publikasi">Nomor Publikasi</label>
-                                    <input type="text" name="nomor_publikasi" id="nomor_publikasi" 
-                                           class="form-control @error('nomor_publikasi') is-invalid @enderror" 
+                                    <input type="text" name="nomor_publikasi" id="nomor_publikasi"
+                                           class="form-control @error('nomor_publikasi') is-invalid @enderror"
                                            value="{{ old('nomor_publikasi', $haki->nomor_publikasi) }}">
                                     @error('nomor_publikasi')
-                                        <span class="invalid-feedback">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="nomor_sertifikat">Nomor Sertifikat</label>
-                                    <input type="text" name="nomor_sertifikat" id="nomor_sertifikat" 
-                                           class="form-control @error('nomor_sertifikat') is-invalid @enderror" 
-                                           value="{{ old('nomor_sertifikat', $haki->nomor_sertifikat) }}">
-                                    @error('nomor_sertifikat')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -232,8 +254,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="tanggal_publikasi">Tanggal Publikasi</label>
-                                    <input type="date" name="tanggal_publikasi" id="tanggal_publikasi" 
-                                           class="form-control @error('tanggal_publikasi') is-invalid @enderror" 
+                                    <input type="date" name="tanggal_publikasi" id="tanggal_publikasi"
+                                           class="form-control @error('tanggal_publikasi') is-invalid @enderror"
                                            value="{{ old('tanggal_publikasi', $haki->tanggal_publikasi?->format('Y-m-d')) }}">
                                     @error('tanggal_publikasi')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -242,11 +264,11 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="tanggal_granted">Tanggal Granted</label>
-                                    <input type="date" name="tanggal_granted" id="tanggal_granted" 
-                                           class="form-control @error('tanggal_granted') is-invalid @enderror" 
-                                           value="{{ old('tanggal_granted', $haki->tanggal_granted?->format('Y-m-d')) }}">
-                                    @error('tanggal_granted')
+                                    <label for="tanggal_penerimaan">Tanggal Penerimaan</label>
+                                    <input type="date" name="tanggal_penerimaan" id="tanggal_penerimaan"
+                                           class="form-control @error('tanggal_penerimaan') is-invalid @enderror"
+                                           value="{{ old('tanggal_penerimaan', $haki->tanggal_penerimaan?->format('Y-m-d')) }}">
+                                    @error('tanggal_penerimaan')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>

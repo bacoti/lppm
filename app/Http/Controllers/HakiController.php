@@ -15,19 +15,22 @@ class HakiController extends Controller
         $query = Haki::query();
 
         // Search functionality
-        if ($request->filled('search')) {
-            $search = $request->search;
+        if ($request->filled('q')) {
+            $search = $request->q;
             $query->where(function($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
                   ->orWhere('deskripsi', 'like', "%{$search}%")
                   ->orWhere('bidang_teknologi', 'like', "%{$search}%")
+                  ->orWhere('nomor_permohonan', 'like', "%{$search}%")
+                  ->orWhere('tahun_permohonan', 'like', "%{$search}%")
+                  ->orWhere('pemegang_paten', 'like', "%{$search}%")
                   ->orWhereJsonContains('inventor', $search);
             });
         }
 
         // Filter by jenis HAKI
-        if ($request->filled('jenis_haki')) {
-            $query->where('jenis_haki', $request->jenis_haki);
+        if ($request->filled('jenis')) {
+            $query->where('jenis_haki', $request->jenis);
         }
 
         // Filter by status
@@ -36,7 +39,7 @@ class HakiController extends Controller
         }
 
         // Get HAKI list with pagination
-        $hakiList = $query->latest()->paginate(12);
+        $hakis = $query->latest()->paginate(12);
 
         // Calculate statistics
         $statistics = [
@@ -47,21 +50,19 @@ class HakiController extends Controller
         ];
 
         // Get options for filters
-        $jenisHakiOptions = Haki::getJenisHakiOptions();
+        $jenisOptions = Haki::getJenisHakiOptions();
         $statusOptions = Haki::getStatusOptions();
 
-        return view('haki.index', compact('hakiList', 'statistics', 'jenisHakiOptions', 'statusOptions'));
+        return view('frontend.haki.index', compact('hakis', 'statistics', 'jenisOptions', 'statusOptions'));
     }
 
     /**
      * Display the specified HAKI
      */
-    public function show($slug)
+    public function show(Haki $haki)
     {
-        $haki = Haki::where('slug', $slug)->firstOrFail();
-        
         // Get related HAKI (same jenis_haki or bidang_teknologi)
-        $relatedHaki = Haki::where('id', '!=', $haki->id)
+        $relatedHakis = Haki::where('id', '!=', $haki->id)
             ->where(function($query) use ($haki) {
                 $query->where('jenis_haki', $haki->jenis_haki)
                       ->orWhere('bidang_teknologi', $haki->bidang_teknologi);
@@ -73,6 +74,6 @@ class HakiController extends Controller
         // Get next HAKI for navigation
         $nextHaki = Haki::where('id', '>', $haki->id)->first();
 
-        return view('haki.show', compact('haki', 'relatedHaki', 'nextHaki'));
+        return view('frontend.haki.show', compact('haki', 'relatedHakis', 'nextHaki'));
     }
 }

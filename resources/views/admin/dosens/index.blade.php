@@ -71,13 +71,14 @@
                         <thead class="table-dark">
                             <tr>
                                 <th width="5%">No</th>
-                                <th width="15%">NIDN/NIP</th>
-                                <th width="20%">Nama Dosen</th>
+                                <th width="12%">NIDN/NIP</th>
+                                <th width="22%">Nama Dosen</th>
                                 <th width="10%">Foto</th>
-                                <th width="15%">Gelar</th>
-                                <th width="10%">Jenis Kelamin</th>
-                                <th width="15%">Tempat Lahir</th>
-                                <th width="10%">Aksi</th>
+                                <th width="10%">Gelar</th>
+                                <th width="10%">Email</th>
+                                <th width="10%">Role</th>
+                                <th width="15%">Departemen</th>
+                                <th width="11%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,6 +92,9 @@
                                         <div>
                                             <strong>{{ $dosen->nama_lengkap ?: 'Nama belum diisi' }}</strong>
                                         </div>
+                                        <div>
+                                            <small class="text-muted">{{ $dosen->affiliation ?? '' }}</small>
+                                        </div>
                                     </td>
                                     <td>
                                         @if($dosen->photo)
@@ -99,41 +103,34 @@
                                                  class="rounded-circle"
                                                  style="width: 50px; height: 50px; object-fit: cover;">
                                         @else
-                                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" 
+                                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center"
                                                  style="width: 50px; height: 50px;">
                                                 <i class="fas fa-user text-white"></i>
                                             </div>
                                         @endif
                                     </td>
                                     <td>{{ $dosen->gelar_akademik ?: '-' }}</td>
-                                    <td>
-                                        @if($dosen->jenis_kelamin)
-                                            <span class="badge bg-{{ $dosen->jenis_kelamin == 'L' ? 'primary' : 'info' }}">
-                                                {{ $dosen->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
-                                            </span>
-                                        @else
-                                            <span class="text-muted">-</span>
-                                        @endif
-                                    </td>
-                                    <td>{{ $dosen->tempat_lahir ?: '-' }}</td>
+                                    <td>{{ $dosen->email ?: '-' }}</td>
+                                    <td>{{ $dosen->getRoleLabel() }}</td>
+                                    <td>{{ $dosen->department ?: '-' }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('admin.dosens.show', $dosen) }}" 
+                                            <a href="{{ route('admin.dosens.show', $dosen) }}"
                                                class="btn btn-sm btn-outline-primary" title="Lihat Detail">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('admin.dosens.edit', $dosen) }}" 
+                                            <a href="{{ route('admin.dosens.edit', $dosen) }}"
                                                class="btn btn-sm btn-outline-warning" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <button type="button" class="btn btn-sm btn-outline-danger btn-delete"
-                                                    data-id="{{ $dosen->id }}" 
+                                                    data-id="{{ $dosen->id }}"
                                                     data-name="{{ $dosen->nama_lengkap }}" title="Hapus">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
                                         <form id="delete-form-{{ $dosen->id }}"
-                                              action="{{ route('admin.dosens.destroy', $dosen->id) }}" 
+                                              action="{{ route('admin.dosens.destroy', $dosen->id) }}"
                                               method="POST" class="d-none">
                                             @csrf
                                             @method('DELETE')
@@ -158,7 +155,7 @@
                                                  class="rounded-circle w-100"
                                                  style="height: 80px; object-fit: cover;">
                                         @else
-                                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center w-100" 
+                                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center w-100"
                                                  style="height: 80px;">
                                                 <i class="fas fa-user text-white fa-2x"></i>
                                             </div>
@@ -166,13 +163,19 @@
                                     </div>
                                     <div class="col-9">
                                         <h6 class="card-title mb-1">{{ $dosen->nama_lengkap ?: 'Nama belum diisi' }}</h6>
-                                        <p class="card-text mb-1">
-                                            <small class="text-muted">NIDN/NIP:</small> 
-                                            <strong>{{ $dosen->nidn_nip ?: '-' }}</strong>
-                                        </p>
-                                        <p class="card-text mb-2">
-                                            <small class="text-muted">Gelar:</small> {{ $dosen->gelar_akademik ?: '-' }}
-                                        </p>
+                                            <p class="card-text mb-1">
+                                                <small class="text-muted">NIDN/NIP:</small>
+                                                <strong>{{ $dosen->nidn_nip ?: '-' }}</strong>
+                                            </p>
+                                            <p class="card-text mb-1">
+                                                <small class="text-muted">Gelar:</small> {{ $dosen->gelar_akademik ?: '-' }}
+                                            </p>
+                                            <p class="card-text mb-1 text-truncate">
+                                                <small class="text-muted">Email:</small> {{ $dosen->email ?: '-' }}
+                                            </p>
+                                            <p class="card-text mb-2">
+                                                <small class="text-muted">Prodi:</small> {{ $dosen->department ?: '-' }}
+                                            </p>
                                         <div class="btn-group w-100" role="group">
                                             <a href="{{ route('admin.dosens.show', $dosen) }}" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-eye"></i> Detail
@@ -208,7 +211,7 @@
                     </h5>
                     <p class="text-muted">
                         @if(request('q'))
-                            Coba gunakan kata kunci yang berbeda atau 
+                            Coba gunakan kata kunci yang berbeda atau
                             <a href="{{ route('admin.dosens.index') }}">lihat semua data</a>
                         @else
                             Klik tombol "Tambah Dosen" untuk menambahkan data dosen pertama
@@ -231,7 +234,7 @@
             btn.addEventListener('click', function() {
                 const dosenId = this.getAttribute('data-id');
                 const dosenName = this.getAttribute('data-name');
-                
+
                 Swal.fire({
                     title: 'Konfirmasi Hapus',
                     html: `Yakin ingin menghapus data dosen:<br><strong>${dosenName}</strong>?`,

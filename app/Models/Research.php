@@ -60,6 +60,27 @@ class Research extends Model
         'file_proposal',
         'file_progress_report',
         'file_final_report',
+        // Additional fields
+        'nidn_leader',
+        'leader_name',
+        'pddikti_code_pt',
+        'institution',
+        'skema_abbreviation',
+        'skema_name',
+        'first_proposal_year',
+        'proposed_year_of_activities',
+        'year_of_activity',
+        'duration_of_activity',
+        'proposal_status',
+        'funds_approved',
+        'sinta_affiliation_id',
+        'funds_institution',
+        'target_tkt_level',
+        'hibah_program',
+        'focus_area',
+        'fund_source_category',
+        'fund_source',
+        'country_fund_source',
     ];
 
     protected $casts = [
@@ -70,6 +91,12 @@ class Research extends Model
         'tanggal_sk' => 'date',
         'hibah_kompetitif' => 'boolean',
         'progress_percentage' => 'integer',
+        'first_proposal_year' => 'integer',
+        'proposed_year_of_activities' => 'integer',
+        'year_of_activity' => 'integer',
+        'duration_of_activity' => 'integer',
+        'target_tkt_level' => 'integer',
+        'funds_approved' => 'decimal:2',
     ];
 
     /**
@@ -130,6 +157,28 @@ class Research extends Model
             'file_proposal' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
             'file_progress_report' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
             'file_final_report' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+
+            // Additional research fields
+            'nidn_leader' => 'nullable|string|max:255',
+            'leader_name' => 'nullable|string|max:255',
+            'pddikti_code_pt' => 'nullable|string|max:255',
+            'institution' => 'nullable|string|max:255',
+            'skema_abbreviation' => 'nullable|string|max:255',
+            'skema_name' => 'nullable|string|max:255',
+            'first_proposal_year' => 'nullable|integer|min:2000|max:' . (date('Y') + 10),
+            'proposed_year_of_activities' => 'nullable|integer|min:2000|max:' . (date('Y') + 10),
+            'year_of_activity' => 'nullable|integer|min:2000|max:' . (date('Y') + 10),
+            'duration_of_activity' => 'nullable|integer|min:1|max:10',
+            'proposal_status' => 'nullable|in:draft,submitted,approved,rejected,revision,funded,completed',
+            'funds_approved' => 'nullable|numeric|min:0|max:999999999999.99',
+            'sinta_affiliation_id' => 'nullable|string|max:255',
+            'funds_institution' => 'nullable|string|max:255',
+            'target_tkt_level' => 'nullable|integer|min:1|max:9',
+            'hibah_program' => 'nullable|string|max:255',
+            'focus_area' => 'nullable|string|max:255',
+            'fund_source_category' => 'nullable|string|max:255',
+            'fund_source' => 'nullable|string|max:255',
+            'country_fund_source' => 'nullable|string|max:255',
         ];
 
         // For updates, make some fields optional
@@ -293,5 +342,46 @@ class Research extends Model
     public function dosen(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Dosen::class);
+    }
+
+    /**
+     * Get proposal status options
+     */
+    public static function getProposalStatusOptions(): array
+    {
+        return [
+            'draft' => 'Draft',
+            'submitted' => 'Diajukan',
+            'approved' => 'Disetujui',
+            'rejected' => 'Ditolak',
+            'revision' => 'Revisi',
+            'funded' => 'Didanai',
+            'completed' => 'Selesai',
+        ];
+    }
+
+    /**
+     * Get proposal status badge class
+     */
+    public function getProposalStatusBadgeClass(): string
+    {
+        return match($this->proposal_status) {
+            'draft' => 'secondary',
+            'submitted' => 'info',
+            'approved' => 'success',
+            'rejected' => 'danger',
+            'revision' => 'warning',
+            'funded' => 'primary',
+            'completed' => 'success',
+            default => 'secondary',
+        };
+    }
+
+    /**
+     * Get formatted funds approved
+     */
+    public function getFormattedFundsApproved(): string
+    {
+        return $this->funds_approved ? 'Rp ' . number_format($this->funds_approved, 0, ',', '.') : '-';
     }
 }

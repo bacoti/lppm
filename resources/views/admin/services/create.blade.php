@@ -85,6 +85,129 @@
                             </div>
                         </div>
 
+                        <!-- Leader Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-user-tie me-2"></i>Informasi Ketua
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="nidn_leader" class="form-label">NIDN Ketua</label>
+                                <input type="text" class="form-control @error('nidn_leader') is-invalid @enderror"
+                                       id="nidn_leader" name="nidn_leader" value="{{ old('nidn_leader') }}"
+                                       placeholder="Nomor NIDN ketua peneliti">
+                                @error('nidn_leader')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="leader_name" class="form-label">Nama Ketua</label>
+                                <input type="text" class="form-control @error('leader_name') is-invalid @enderror"
+                                       id="leader_name" name="leader_name" value="{{ old('leader_name') }}"
+                                       placeholder="Nama lengkap ketua peneliti">
+                                @error('leader_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="pddikti_code_pt" class="form-label">Kode PDDIKTI PT</label>
+                                <input type="text" class="form-control @error('pddikti_code_pt') is-invalid @enderror"
+                                       id="pddikti_code_pt" name="pddikti_code_pt" value="{{ old('pddikti_code_pt') }}"
+                                       placeholder="Kode PDDIKTI perguruan tinggi">
+                                @error('pddikti_code_pt')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="institution" class="form-label">Institusi</label>
+                                <input type="text" class="form-control @error('institution') is-invalid @enderror"
+                                       id="institution" name="institution" value="{{ old('institution') }}"
+                                       placeholder="Nama institusi perguruan tinggi">
+                                @error('institution')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Skema Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-project-diagram me-2"></i>Informasi Skema
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="skema_abbreviation" class="form-label">Singkatan Skema</label>
+                                <input type="text" class="form-control @error('skema_abbreviation') is-invalid @enderror"
+                                       id="skema_abbreviation" name="skema_abbreviation" value="{{ old('skema_abbreviation') }}"
+                                       placeholder="Contoh: PPM, PKM, dll">
+                                @error('skema_abbreviation')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="skema_name" class="form-label">Nama Skema</label>
+                                <input type="text" class="form-control @error('skema_name') is-invalid @enderror"
+                                       id="skema_name" name="skema_name" value="{{ old('skema_name') }}"
+                                       placeholder="Nama lengkap skema pengabdian">
+                                @error('skema_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Timeline Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-clock me-2"></i>Informasi Timeline
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label for="first_year_proposal" class="form-label">Tahun Pertama Proposal</label>
+                                <input type="number" class="form-control @error('first_year_proposal') is-invalid @enderror"
+                                       id="first_year_proposal" name="first_year_proposal" value="{{ old('first_year_proposal') }}"
+                                       min="2000" max="{{ date('Y') + 10 }}" placeholder="Tahun">
+                                @error('first_year_proposal')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="proposed_year_activities" class="form-label">Tahun Kegiatan Diusulkan</label>
+                                <input type="number" class="form-control @error('proposed_year_activities') is-invalid @enderror"
+                                       id="proposed_year_activities" name="proposed_year_activities" value="{{ old('proposed_year_activities') }}"
+                                       min="2000" max="{{ date('Y') + 10 }}" placeholder="Tahun">
+                                @error('proposed_year_activities')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="activity_year" class="form-label">Tahun Kegiatan</label>
+                                <input type="number" class="form-control @error('activity_year') is-invalid @enderror"
+                                       id="activity_year" name="activity_year" value="{{ old('activity_year') }}"
+                                       min="2000" max="{{ date('Y') + 10 }}" placeholder="Tahun">
+                                @error('activity_year')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <!-- Status dan Progress -->
                         <div class="row mb-4">
                             <div class="col-12">
@@ -95,7 +218,7 @@
                         </div>
 
                         <div class="row g-3 mb-4">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label for="status" class="form-label">Status Pengabdian <span class="text-danger">*</span></label>
                                 <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
                                     <option value="">Pilih Status</option>
@@ -110,7 +233,22 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <label for="proposal_status" class="form-label">Status Proposal</label>
+                                <select class="form-select @error('proposal_status') is-invalid @enderror" id="proposal_status" name="proposal_status">
+                                    <option value="">Pilih Status Proposal</option>
+                                    @foreach($proposalStatusOptions as $key => $label)
+                                        <option value="{{ $key }}" {{ old('proposal_status') == $key ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('proposal_status')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
                                 <label for="progress_percentage" class="form-label">Progress (%)</label>
                                 <input type="number" class="form-control @error('progress_percentage') is-invalid @enderror"
                                        id="progress_percentage" name="progress_percentage"
@@ -297,7 +435,7 @@
                         </div>
 
                         <div class="row g-3 mb-4">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label for="sumber_dana" class="form-label">Sumber Dana</label>
                                 <input type="text" class="form-control @error('sumber_dana') is-invalid @enderror"
                                        id="sumber_dana" name="sumber_dana" value="{{ old('sumber_dana') }}"
@@ -307,7 +445,17 @@
                                 @enderror
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
+                                <label for="fund_source" class="form-label">Sumber Dana</label>
+                                <input type="text" class="form-control @error('fund_source') is-invalid @enderror"
+                                       id="fund_source" name="fund_source" value="{{ old('fund_source') }}"
+                                       placeholder="Detail sumber dana">
+                                @error('fund_source')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
                                 <label for="jumlah_dana" class="form-label">Jumlah Dana (Rp)</label>
                                 <input type="number" class="form-control @error('jumlah_dana') is-invalid @enderror"
                                        id="jumlah_dana" name="jumlah_dana" value="{{ old('jumlah_dana') }}" min="0">
@@ -316,7 +464,56 @@
                                 @enderror
                             </div>
 
+                            <div class="col-md-6">
+                                <label for="fund_approved" class="form-label">Dana yang Disetujui (Rp)</label>
+                                <input type="number" class="form-control @error('fund_approved') is-invalid @enderror"
+                                       id="fund_approved" name="fund_approved" value="{{ old('fund_approved') }}" min="0">
+                                @error('fund_approved')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="col-md-4">
+                                <label for="funds_institution" class="form-label">Institusi Pemberi Dana</label>
+                                <input type="text" class="form-control @error('funds_institution') is-invalid @enderror"
+                                       id="funds_institution" name="funds_institution" value="{{ old('funds_institution') }}"
+                                       placeholder="Institusi yang memberikan dana">
+                                @error('funds_institution')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="fund_source_category" class="form-label">Kategori Sumber Dana</label>
+                                <input type="text" class="form-control @error('fund_source_category') is-invalid @enderror"
+                                       id="fund_source_category" name="fund_source_category" value="{{ old('fund_source_category') }}"
+                                       placeholder="Kategori sumber dana">
+                                @error('fund_source_category')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="country_fund_source" class="form-label">Negara Sumber Dana</label>
+                                <input type="text" class="form-control @error('country_fund_source') is-invalid @enderror"
+                                       id="country_fund_source" name="country_fund_source" value="{{ old('country_fund_source') }}"
+                                       placeholder="Negara asal dana">
+                                @error('country_fund_source')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="hibah_program" class="form-label">Program Hibah</label>
+                                <input type="text" class="form-control @error('hibah_program') is-invalid @enderror"
+                                       id="hibah_program" name="hibah_program" value="{{ old('hibah_program') }}"
+                                       placeholder="Nama program hibah">
+                                @error('hibah_program')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
                                 <label class="form-label">Hibah Kompetitif</label>
                                 <div class="form-check form-switch">
                                     <input class="form-check-input @error('hibah_kompetitif') is-invalid @enderror"
@@ -327,6 +524,47 @@
                                     </label>
                                 </div>
                                 @error('hibah_kompetitif')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h5 class="text-primary border-bottom pb-2">
+                                    <i class="fas fa-info-circle me-2"></i>Informasi Tambahan
+                                </h5>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label for="sinta_affiliation_id" class="form-label">ID Afiliasi SINTA</label>
+                                <input type="text" class="form-control @error('sinta_affiliation_id') is-invalid @enderror"
+                                       id="sinta_affiliation_id" name="sinta_affiliation_id" value="{{ old('sinta_affiliation_id') }}"
+                                       placeholder="ID afiliasi SINTA">
+                                @error('sinta_affiliation_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="target_tkt" class="form-label">Target TKT</label>
+                                <input type="number" class="form-control @error('target_tkt') is-invalid @enderror"
+                                       id="target_tkt" name="target_tkt" value="{{ old('target_tkt') }}"
+                                       min="1" max="9" placeholder="1-9">
+                                @error('target_tkt')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-12">
+                                <label for="focus_area" class="form-label">Area Fokus</label>
+                                <textarea class="form-control @error('focus_area') is-invalid @enderror"
+                                          id="focus_area" name="focus_area" rows="2"
+                                          placeholder="Area fokus pengabdian masyarakat">{{ old('focus_area') }}</textarea>
+                                @error('focus_area')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

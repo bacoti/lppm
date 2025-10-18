@@ -66,12 +66,14 @@ class ServiceController extends Controller
         $statusOptions = Service::getStatusOptions();
         $jenisOptions = Service::getJenisPengabdianOptions();
         $kepuasanOptions = Service::getTingkatKepuasanOptions();
+        $proposalStatusOptions = Service::getProposalStatusOptions();
 
         return view('admin.services.create', compact(
             'dosens',
             'statusOptions',
             'jenisOptions',
-            'kepuasanOptions'
+            'kepuasanOptions',
+            'proposalStatusOptions'
         ));
     }
 
@@ -126,13 +128,15 @@ class ServiceController extends Controller
         $statusOptions = Service::getStatusOptions();
         $jenisOptions = Service::getJenisPengabdianOptions();
         $kepuasanOptions = Service::getTingkatKepuasanOptions();
+        $proposalStatusOptions = Service::getProposalStatusOptions();
 
         return view('admin.services.edit', compact(
             'service',
             'dosens',
             'statusOptions',
             'jenisOptions',
-            'kepuasanOptions'
+            'kepuasanOptions',
+            'proposalStatusOptions'
         ));
     }
 
@@ -344,6 +348,12 @@ class ServiceController extends Controller
                 $q->where('judul', 'like', "%{$search}%")
                     ->orWhere('deskripsi', 'like', "%{$search}%")
                     ->orWhere('lokasi', 'like', "%{$search}%")
+                    ->orWhere('leader_name', 'like', "%{$search}%")
+                    ->orWhere('institution', 'like', "%{$search}%")
+                    ->orWhere('skema_name', 'like', "%{$search}%")
+                    ->orWhere('skema_abbreviation', 'like', "%{$search}%")
+                    ->orWhere('hibah_program', 'like', "%{$search}%")
+                    ->orWhere('focus_area', 'like', "%{$search}%")
                     ->orWhereHas('dosen', function ($q2) use ($search) {
                         $q2->where('nama_lengkap', 'like', "%{$search}%")
                             ->orWhere('nidn_nip', 'like', "%{$search}%");
