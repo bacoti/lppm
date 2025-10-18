@@ -56,7 +56,7 @@
                                 <i class="fas fa-search me-1"></i>Kata Kunci
                             </label>
                             <input type="text" name="q" id="search" value="{{ request('q') }}"
-                                   class="form-control form-control-lg" 
+                                   class="form-control form-control-lg"
                                    placeholder="Cari judul penelitian atau nama peneliti...">
                         </div>
                         <div class="col-md-2">
@@ -109,7 +109,7 @@
         <div class="d-flex align-items-center">
             <i class="fas fa-info-circle me-2"></i>
             <div>
-                <strong>Hasil Pencarian:</strong> 
+                <strong>Hasil Pencarian:</strong>
                 Ditemukan <strong>{{ $researches->total() }}</strong> penelitian
                 @if(request('q'))
                     dengan kata kunci "<strong>{{ request('q') }}</strong>"
@@ -465,16 +465,16 @@
     .research-table-section .table-responsive {
         font-size: 0.85rem;
     }
-    
+
     .research-table-section .table thead th {
         font-size: 0.8rem;
         padding: 8px;
     }
-    
+
     .research-table-section .table tbody td {
         padding: 10px 8px;
     }
-    
+
     .researcher-avatar-sm {
         width: 30px;
         height: 30px;
@@ -512,20 +512,20 @@
     .hero-title {
         font-size: 2rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1rem;
     }
-    
+
     .stat-number {
         font-size: 2rem;
     }
-    
+
     .research-title {
         font-size: 1rem;
         min-height: auto;
     }
-    
+
     .research-hero-section {
         padding: 50px 0 40px;
     }
@@ -579,13 +579,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-submit on filter change
     const tahunSelect = document.getElementById('tahun');
     const proposalStatusSelect = document.getElementById('proposal_status');
-    
+
     if (tahunSelect) {
         tahunSelect.addEventListener('change', function() {
             document.getElementById('filterForm').submit();
         });
     }
-    
+
     if (proposalStatusSelect) {
         proposalStatusSelect.addEventListener('change', function() {
             document.getElementById('filterForm').submit();

@@ -16,24 +16,24 @@ class HakiController extends Controller
     public function index(Request $request)
     {
         $query = Haki::query();
-        
+
         // Search functionality
         if ($request->filled('search')) {
             $query->search($request->search);
         }
-        
+
         // Filter by jenis HAKI
         if ($request->filled('jenis')) {
             $query->byJenis($request->jenis);
         }
-        
+
         // Filter by status
         if ($request->filled('status')) {
             $query->byStatus($request->status);
         }
-        
+
         $hakis = $query->latest()->paginate(15)->withQueryString();
-        
+
         return view('admin.haki.index', compact('hakis'));
     }
 
@@ -44,7 +44,7 @@ class HakiController extends Controller
     {
         $jenisHakiOptions = Haki::getJenisHakiOptions();
         $statusOptions = Haki::getStatusOptions();
-        
+
         return view('admin.haki.create', compact('jenisHakiOptions', 'statusOptions'));
     }
 
@@ -85,7 +85,7 @@ class HakiController extends Controller
         if ($request->hasFile('file_dokumen')) {
             $validated['file_dokumen'] = $request->file('file_dokumen')->store('haki/dokumen', 'public');
         }
-        
+
         if ($request->hasFile('file_sertifikat')) {
             $validated['file_sertifikat'] = $request->file('file_sertifikat')->store('haki/sertifikat', 'public');
         }
@@ -114,7 +114,7 @@ class HakiController extends Controller
     {
         $jenisHakiOptions = Haki::getJenisHakiOptions();
         $statusOptions = Haki::getStatusOptions();
-        
+
         return view('admin.haki.edit', compact('haki', 'jenisHakiOptions', 'statusOptions'));
     }
 
@@ -159,7 +159,7 @@ class HakiController extends Controller
             }
             $validated['file_dokumen'] = $request->file('file_dokumen')->store('haki/dokumen', 'public');
         }
-        
+
         if ($request->hasFile('file_sertifikat')) {
             // Delete old file if exists
             if ($haki->file_sertifikat) {
@@ -186,7 +186,7 @@ class HakiController extends Controller
         if ($haki->file_dokumen) {
             Storage::disk('public')->delete($haki->file_dokumen);
         }
-        
+
         if ($haki->file_sertifikat) {
             Storage::disk('public')->delete($haki->file_sertifikat);
         }

@@ -56,7 +56,7 @@
                                 <i class="fas fa-user-search me-1"></i>Kata Kunci
                             </label>
                             <input type="text" name="q" id="search" value="{{ $query ?? '' }}"
-                                   class="form-control form-control-lg" 
+                                   class="form-control form-control-lg"
                                    placeholder="Cari nama dosen, NIDN, atau bidang keilmuan...">
                         </div>
                         <div class="col-md-3">
@@ -95,7 +95,7 @@
         <div class="d-flex align-items-center">
             <i class="fas fa-info-circle me-2"></i>
             <div>
-                <strong>Hasil Pencarian:</strong> 
+                <strong>Hasil Pencarian:</strong>
                 Ditemukan <strong>{{ $qualifications->total() }}</strong> kualifikasi
                 @if($query)
                     dengan kata kunci "<strong>{{ $query }}</strong>"

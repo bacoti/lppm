@@ -158,7 +158,7 @@
                             ];
                             $hasFiles = false;
                         @endphp
-                        
+
                         @foreach($files as $field => $fileInfo)
                             @if($research->$field)
                                 @php $hasFiles = true; @endphp
@@ -175,7 +175,7 @@
                                 </a>
                             @endif
                         @endforeach
-                        
+
                         @if(!$hasFiles)
                             <div class="text-muted text-center py-3">
                                 <i class="fas fa-info-circle me-2"></i>
@@ -336,19 +336,19 @@
                     <i class="fas fa-share-alt me-2"></i>Bagikan
                 </h5>
                 <div class="share-buttons">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}" 
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}"
                        target="_blank" class="share-btn facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($research->judul) }}" 
+                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($research->judul) }}"
                        target="_blank" class="share-btn twitter">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="https://wa.me/?text={{ urlencode($research->judul . ' ' . request()->url()) }}" 
+                    <a href="https://wa.me/?text={{ urlencode($research->judul . ' ' . request()->url()) }}"
                        target="_blank" class="share-btn whatsapp">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a href="mailto:?subject={{ urlencode($research->judul) }}&body={{ urlencode(request()->url()) }}" 
+                    <a href="mailto:?subject={{ urlencode($research->judul) }}&body={{ urlencode(request()->url()) }}"
                        class="share-btn email">
                         <i class="fas fa-envelope"></i>
                     </a>
@@ -723,12 +723,12 @@
     .detail-title {
         font-size: 1.8rem;
     }
-    
+
     .researcher-profile {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .info-card {
         flex-direction: column;
     }
@@ -738,12 +738,12 @@
     .detail-title {
         font-size: 1.5rem;
     }
-    
+
     .info-row {
         flex-direction: column;
         gap: 5px;
     }
-    
+
     .info-value {
         text-align: left;
     }

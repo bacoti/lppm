@@ -26,7 +26,7 @@
             <form action="{{ route('admin.haki.update', $haki) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                
+
                 <!-- Informasi Dasar -->
                 <div class="card">
                     <div class="card-header">
@@ -39,8 +39,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="judul">Judul HAKI <span class="text-danger">*</span></label>
-                                    <input type="text" name="judul" id="judul" 
-                                           class="form-control @error('judul') is-invalid @enderror" 
+                                    <input type="text" name="judul" id="judul"
+                                           class="form-control @error('judul') is-invalid @enderror"
                                            value="{{ old('judul', $haki->judul) }}" required>
                                     @error('judul')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -50,7 +50,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="jenis_haki">Jenis HAKI <span class="text-danger">*</span></label>
-                                    <select name="jenis_haki" id="jenis_haki" 
+                                    <select name="jenis_haki" id="jenis_haki"
                                             class="form-control @error('jenis_haki') is-invalid @enderror" required>
                                         <option value="">Pilih Jenis HAKI</option>
                                         @foreach($jenisHakiOptions as $key => $label)
@@ -67,7 +67,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="status">Status <span class="text-danger">*</span></label>
-                                    <select name="status" id="status" 
+                                    <select name="status" id="status"
                                             class="form-control @error('status') is-invalid @enderror" required>
                                         @foreach($statusOptions as $key => $label)
                                             <option value="{{ $key }}" {{ old('status', $haki->status) == $key ? 'selected' : '' }}>
@@ -81,10 +81,10 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
-                            <textarea name="deskripsi" id="deskripsi" rows="4" 
+                            <textarea name="deskripsi" id="deskripsi" rows="4"
                                       class="form-control @error('deskripsi') is-invalid @enderror">{{ old('deskripsi', $haki->deskripsi) }}</textarea>
                             @error('deskripsi')
                                 <span class="invalid-feedback">{{ $message }}</span>
@@ -105,8 +105,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="bidang_teknologi">Bidang Teknologi</label>
-                                    <input type="text" name="bidang_teknologi" id="bidang_teknologi" 
-                                           class="form-control @error('bidang_teknologi') is-invalid @enderror" 
+                                    <input type="text" name="bidang_teknologi" id="bidang_teknologi"
+                                           class="form-control @error('bidang_teknologi') is-invalid @enderror"
                                            value="{{ old('bidang_teknologi', $haki->bidang_teknologi) }}">
                                     @error('bidang_teknologi')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -116,8 +116,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="klasifikasi">Klasifikasi (IPC untuk Paten)</label>
-                                    <input type="text" name="klasifikasi" id="klasifikasi" 
-                                           class="form-control @error('klasifikasi') is-invalid @enderror" 
+                                    <input type="text" name="klasifikasi" id="klasifikasi"
+                                           class="form-control @error('klasifikasi') is-invalid @enderror"
                                            value="{{ old('klasifikasi', $haki->klasifikasi) }}">
                                     @error('klasifikasi')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -141,9 +141,9 @@
                                 @foreach(old('inventor', $haki->inventor) as $index => $inventor)
                                 <div class="inventor-row mb-2">
                                     <div class="input-group">
-                                        <input type="text" name="inventor[]" 
-                                               class="form-control @error('inventor.'.$index) is-invalid @enderror" 
-                                               placeholder="Nama inventor/pencipta" 
+                                        <input type="text" name="inventor[]"
+                                               class="form-control @error('inventor.'.$index) is-invalid @enderror"
+                                               placeholder="Nama inventor/pencipta"
                                                value="{{ $inventor }}" required>
                                         <div class="input-group-append">
                                             @if($index == 0)
@@ -165,8 +165,8 @@
                             @else
                                 <div class="inventor-row mb-2">
                                     <div class="input-group">
-                                        <input type="text" name="inventor[]" 
-                                               class="form-control" 
+                                        <input type="text" name="inventor[]"
+                                               class="form-control"
                                                placeholder="Nama inventor/pencipta" required>
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-success add-inventor">
@@ -243,8 +243,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="tanggal_daftar">Tanggal Daftar</label>
-                                    <input type="date" name="tanggal_daftar" id="tanggal_daftar" 
-                                           class="form-control @error('tanggal_daftar') is-invalid @enderror" 
+                                    <input type="date" name="tanggal_daftar" id="tanggal_daftar"
+                                           class="form-control @error('tanggal_daftar') is-invalid @enderror"
                                            value="{{ old('tanggal_daftar', $haki->tanggal_daftar?->format('Y-m-d')) }}">
                                     @error('tanggal_daftar')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -276,8 +276,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="kantor_kekayaan_intelektual">Kantor KI</label>
-                                    <input type="text" name="kantor_kekayaan_intelektual" id="kantor_kekayaan_intelektual" 
-                                           class="form-control @error('kantor_kekayaan_intelektual') is-invalid @enderror" 
+                                    <input type="text" name="kantor_kekayaan_intelektual" id="kantor_kekayaan_intelektual"
+                                           class="form-control @error('kantor_kekayaan_intelektual') is-invalid @enderror"
                                            value="{{ old('kantor_kekayaan_intelektual', $haki->kantor_kekayaan_intelektual) }}">
                                     @error('kantor_kekayaan_intelektual')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -290,8 +290,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tanggal_berlaku_mulai">Tanggal Berlaku Mulai</label>
-                                    <input type="date" name="tanggal_berlaku_mulai" id="tanggal_berlaku_mulai" 
-                                           class="form-control @error('tanggal_berlaku_mulai') is-invalid @enderror" 
+                                    <input type="date" name="tanggal_berlaku_mulai" id="tanggal_berlaku_mulai"
+                                           class="form-control @error('tanggal_berlaku_mulai') is-invalid @enderror"
                                            value="{{ old('tanggal_berlaku_mulai', $haki->tanggal_berlaku_mulai?->format('Y-m-d')) }}">
                                     @error('tanggal_berlaku_mulai')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -301,8 +301,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="tanggal_berlaku_selesai">Tanggal Berlaku Selesai</label>
-                                    <input type="date" name="tanggal_berlaku_selesai" id="tanggal_berlaku_selesai" 
-                                           class="form-control @error('tanggal_berlaku_selesai') is-invalid @enderror" 
+                                    <input type="date" name="tanggal_berlaku_selesai" id="tanggal_berlaku_selesai"
+                                           class="form-control @error('tanggal_berlaku_selesai') is-invalid @enderror"
                                            value="{{ old('tanggal_berlaku_selesai', $haki->tanggal_berlaku_selesai?->format('Y-m-d')) }}">
                                     @error('tanggal_berlaku_selesai')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -312,8 +312,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form-check" style="margin-top: 32px;">
-                                        <input type="checkbox" name="diperpanjang" id="diperpanjang" 
-                                               class="form-check-input" value="1" 
+                                        <input type="checkbox" name="diperpanjang" id="diperpanjang"
+                                               class="form-check-input" value="1"
                                                {{ old('diperpanjang', $haki->diperpanjang) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="diperpanjang">
                                             Diperpanjang
@@ -346,7 +346,7 @@
                                         </div>
                                     @endif
                                     <div class="custom-file">
-                                        <input type="file" name="file_dokumen" id="file_dokumen" 
+                                        <input type="file" name="file_dokumen" id="file_dokumen"
                                                class="custom-file-input @error('file_dokumen') is-invalid @enderror"
                                                accept=".pdf,.doc,.docx">
                                         <label class="custom-file-label" for="file_dokumen">Pilih file baru...</label>
@@ -369,7 +369,7 @@
                                         </div>
                                     @endif
                                     <div class="custom-file">
-                                        <input type="file" name="file_sertifikat" id="file_sertifikat" 
+                                        <input type="file" name="file_sertifikat" id="file_sertifikat"
                                                class="custom-file-input @error('file_sertifikat') is-invalid @enderror"
                                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
                                         <label class="custom-file-label" for="file_sertifikat">Pilih file baru...</label>
@@ -384,7 +384,7 @@
 
                         <div class="form-group">
                             <label for="catatan">Catatan</label>
-                            <textarea name="catatan" id="catatan" rows="3" 
+                            <textarea name="catatan" id="catatan" rows="3"
                                       class="form-control @error('catatan') is-invalid @enderror">{{ old('catatan', $haki->catatan) }}</textarea>
                             @error('catatan')
                                 <span class="invalid-feedback">{{ $message }}</span>
@@ -417,13 +417,13 @@
 $(document).ready(function() {
     // Handle inventor add/remove
     let inventorCount = {{ count(old('inventor', $haki->inventor)) }};
-    
+
     $(document).on('click', '.add-inventor', function() {
         inventorCount++;
         const inventorRow = `
             <div class="inventor-row mb-2">
                 <div class="input-group">
-                    <input type="text" name="inventor[]" class="form-control" 
+                    <input type="text" name="inventor[]" class="form-control"
                            placeholder="Nama inventor/pencipta" required>
                     <div class="input-group-append">
                         <button type="button" class="btn btn-danger remove-inventor">
@@ -435,7 +435,7 @@ $(document).ready(function() {
         `;
         $('#inventor-container').append(inventorRow);
     });
-    
+
     $(document).on('click', '.remove-inventor', function() {
         $(this).closest('.inventor-row').remove();
         inventorCount--;

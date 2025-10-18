@@ -56,7 +56,7 @@
                                 <i class="fas fa-search me-1"></i>Kata Kunci
                             </label>
                             <input type="text" name="q" id="search" value="{{ request('q') }}"
-                                   class="form-control form-control-lg" 
+                                   class="form-control form-control-lg"
                                    placeholder="Cari judul atau lokasi pengabdian...">
                         </div>
                         <div class="col-md-3">
@@ -109,7 +109,7 @@
         <div class="d-flex align-items-center">
             <i class="fas fa-info-circle me-2"></i>
             <div>
-                <strong>Hasil Pencarian:</strong> 
+                <strong>Hasil Pencarian:</strong>
                 Ditemukan <strong>{{ $services->total() }}</strong> pengabdian
                 @if(request('q'))
                     dengan kata kunci "<strong>{{ request('q') }}</strong>"
@@ -517,20 +517,20 @@
     .hero-title {
         font-size: 1.8rem;
     }
-    
+
     .hero-subtitle {
         font-size: 0.95rem;
     }
-    
+
     .stat-number {
         font-size: 2rem;
     }
-    
+
     .service-title {
         font-size: 1rem;
         min-height: auto;
     }
-    
+
     .service-hero-section {
         padding: 40px 0 30px;
     }

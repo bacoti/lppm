@@ -165,7 +165,7 @@
                 </div>
                 <div class="card-content">
                     <h5 class="card-title">Progress & Dampak</h5>
-                    
+
                     @if($service->progress_percentage !== null)
                     <div class="progress-section mb-4">
                         <div class="d-flex justify-content-between mb-2">
@@ -217,7 +217,7 @@
                             ];
                             $hasFiles = false;
                         @endphp
-                        
+
                         @foreach($files as $field => $fileInfo)
                             @if($service->$field)
                                 @php $hasFiles = true; @endphp
@@ -234,7 +234,7 @@
                                 </a>
                             @endif
                         @endforeach
-                        
+
                         @if(!$hasFiles)
                             <div class="text-muted text-center py-3">
                                 <i class="fas fa-info-circle me-2"></i>
@@ -398,19 +398,19 @@
                     <i class="fas fa-share-alt me-2"></i>Bagikan
                 </h5>
                 <div class="share-buttons">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}" 
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}"
                        target="_blank" class="share-btn facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($service->judul) }}" 
+                    <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($service->judul) }}"
                        target="_blank" class="share-btn twitter">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="https://wa.me/?text={{ urlencode($service->judul . ' ' . request()->url()) }}" 
+                    <a href="https://wa.me/?text={{ urlencode($service->judul . ' ' . request()->url()) }}"
                        target="_blank" class="share-btn whatsapp">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a href="mailto:?subject={{ urlencode($service->judul) }}&body={{ urlencode(request()->url()) }}" 
+                    <a href="mailto:?subject={{ urlencode($service->judul) }}&body={{ urlencode(request()->url()) }}"
                        class="share-btn email">
                         <i class="fas fa-envelope"></i>
                     </a>
@@ -880,12 +880,12 @@
     .detail-title {
         font-size: 1.8rem;
     }
-    
+
     .coordinator-profile {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .info-card {
         flex-direction: column;
     }
@@ -895,12 +895,12 @@
     .detail-title {
         font-size: 1.5rem;
     }
-    
+
     .info-row {
         flex-direction: column;
         gap: 5px;
     }
-    
+
     .info-row .info-value {
         text-align: left;
     }

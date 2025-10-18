@@ -370,7 +370,7 @@ class ServiceController extends Controller
         }
 
         $services = $query->paginate(9)->withQueryString();
-        
+
         $years = Service::select(DB::raw('YEAR(tanggal_mulai) as year'))
             ->distinct()
             ->whereNotNull('tanggal_mulai')

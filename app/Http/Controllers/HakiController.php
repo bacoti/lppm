@@ -70,7 +70,7 @@ class HakiController extends Controller
             ->latest()
             ->limit(5)
             ->get();
-        
+
         // Get next HAKI for navigation
         $nextHaki = Haki::where('id', '>', $haki->id)->first();
 
